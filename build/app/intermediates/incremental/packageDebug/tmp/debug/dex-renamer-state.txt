@@ -1,0 +1,4 @@
+#Thu Mar 25 12:45:22 BRT 2021
+base.0=/Volumes/Extra/Documents/developer/flutter/followyoloapp/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
