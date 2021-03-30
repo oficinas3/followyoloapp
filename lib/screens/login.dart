@@ -5,12 +5,21 @@ import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  //_LoginScreenState createState() => _LoginScreenState();
+  State<StatefulWidget> createState() {
+    return LoginScreenState();
+  }
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class LoginScreenState extends State<LoginScreen> {
   //estado de que tipo?
   bool stayLoggedIn = false;
+
+  void isLoggedIn() {
+    setState(() {
+      stayLoggedIn = !stayLoggedIn;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,16 +59,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     obscureText: true,
                   ),
                 ),
-                CheckboxListTile(
-                    title:
-                        Text('Stay Logged In'), //posso colocar ate uma imagem
-                    value: stayLoggedIn,
-                    controlAffinity: ListTileControlAffinity.leading,
-                    onChanged: (stayLoggedIn) {
-                      setState(() {
-                        stayLoggedIn = !stayLoggedIn;
-                      });
-                    }),
+                Row(
+                  children: [
+                    Checkbox(
+                        value: stayLoggedIn,
+                        onChanged: (value) {
+                          setState(() {
+                            stayLoggedIn = !stayLoggedIn;
+                          });
+                        }),
+                    Text('Stay Logged In')
+                  ],
+                ),
                 ElevatedButton(
                   child: Text('Login'),
                   onPressed: () {
