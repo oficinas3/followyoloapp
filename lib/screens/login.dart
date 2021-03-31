@@ -60,6 +60,8 @@ class LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Checkbox(
                         value: stayLoggedIn,

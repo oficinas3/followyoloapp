@@ -1,6 +1,8 @@
 //cadastro
 import 'package:flutter/material.dart';
 
+import './signupconfirmation.dart';
+
 class SignUpScreen extends StatelessWidget {
   //Campos
   var userName = TextEditingController();
@@ -10,6 +12,9 @@ class SignUpScreen extends StatelessWidget {
   var userCPF = TextEditingController();
   var userPassword = TextEditingController();
   var userConfirmPassword = TextEditingController();
+
+  String _name, _email, _phone, _address, _cpf;
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
   _trySubmit(
     String nome,
@@ -33,80 +38,157 @@ class SignUpScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         //ele torna a tela uma deslizavel, vertical eh o padrao
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/images/banner1.png',
-                  width: 300,
-                  height: 300,
-                ),
-                Card(
-                  child: TextFormField(
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(hintText: 'Name'),
-                    controller: userName,
+        child: Form(
+          key: _formkey,
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(25.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/banner1.png',
+                    width: 300,
+                    height: 300,
                   ),
-                ),
-                Card(
-                  child: TextFormField(
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(hintText: 'Email'),
-                    controller: userEmail,
+                  Card(
+                    child: TextFormField(
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(hintText: 'Name'),
+                      controller: userName,
+                      validator: (String value) {
+                        if (value.isEmpty) {
+                          return "Please enter your name";
+                        }
+                        return null;
+                      },
+                      onSaved: (String name) {
+                        _name = name;
+                      },
+                    ),
                   ),
-                ),
-                Card(
-                  child: TextField(
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(hintText: 'Phone'),
+                  Card(
+                    child: TextFormField(
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(hintText: 'Email'),
+                        controller: userEmail,
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return "Please enter your email";
+                          }
+                          return null;
+                        },
+                        onSaved: (String email) {
+                          _email = email;
+                        }),
                   ),
-                ),
-                Card(
-                  child: TextFormField(
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(hintText: 'CPF'),
-                    controller: userCPF,
+                  Card(
+                    child: TextFormField(
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(hintText: 'Phone'),
+                        controller: userPhone,
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return "Please enter phone number";
+                          }
+                          return null;
+                        },
+                        onSaved: (String phone) {
+                          _phone = phone;
+                        }),
                   ),
-                ),
-                Card(
-                  child: TextField(
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(hintText: 'Address'),
+                  Card(
+                    child: TextFormField(
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(hintText: 'CPF'),
+                        keyboardType: TextInputType.number,
+                        controller: userCPF,
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return "Please enter CPF";
+                          }
+                          return null;
+                        },
+                        onSaved: (String cpf) {
+                          _cpf = cpf;
+                        }),
                   ),
-                ),
-                Card(
-                  child: TextField(
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(hintText: 'Password'),
-                    obscureText: true,
-                    controller: userPassword,
+                  Card(
+                    child: TextFormField(
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(hintText: 'Address'),
+                        controller: userAddress,
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return "Please enter address";
+                          }
+                          return null;
+                        },
+                        onSaved: (String address) {
+                          _address = address;
+                        }),
                   ),
-                ),
-                Card(
-                  child: TextField(
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(hintText: 'Confirm Password'),
-                    obscureText: true,
-                    controller: userConfirmPassword,
+                  Card(
+                    child: TextFormField(
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(hintText: 'Password'),
+                      obscureText: true,
+                      controller: userPassword,
+                      validator: (String value) {
+                        if (value.isEmpty) {
+                          return "Please enter Password";
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                ),
-                ElevatedButton(
-                  child: Text('Create Account'),
-                  onPressed: () {
-                    _trySubmit(userName.text, userCPF.text, userPassword.text);
-                    Navigator.pop(context);
-                  },
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text('Login'),
-                ),
-              ],
+                  Card(
+                    child: TextFormField(
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(hintText: 'Confirm Password'),
+                      obscureText: true,
+                      controller: userConfirmPassword,
+                      validator: (String value) {
+                        if (value.isEmpty) {
+                          return "Please confirm your password";
+                        } else if (userPassword.text !=
+                            userConfirmPassword.text) {
+                          return "The password do not match!";
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  ElevatedButton(
+                    child: Text('Confirmation'),
+                    onPressed: () {
+                      //_trySubmit(userName.text, userCPF.text, userPassword.text);
+                      //Navigator.pop(context);
+                      if (_formkey.currentState.validate()) {
+                        //print('hello');
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => SignUpConfirmationScreen(
+                                userName.text,
+                                userEmail.text,
+                                userPhone.text,
+                                userAddress.text,
+                                userCPF.text,
+                                userPassword.text),
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Login'),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
