@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/providers/clients.dart';
+import 'package:provider/provider.dart';
 
 class SignUpConfirmationScreen extends StatelessWidget {
   String name;
@@ -14,6 +16,9 @@ class SignUpConfirmationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final clientDataFromProvider =
+        Provider.of<Clients>(context).findByEmail(email);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueGrey[900],
@@ -42,6 +47,10 @@ class SignUpConfirmationScreen extends StatelessWidget {
                 Text('Phone: ' + phone),
                 Text('Address: ' + address),
                 Text('CPF: ' + cpf),
+                Text('testando provider' +
+                    clientDataFromProvider.email +
+                    ' ' +
+                    clientDataFromProvider.id),
                 ElevatedButton(
                   child: Text('Confirm'),
                   onPressed: () {

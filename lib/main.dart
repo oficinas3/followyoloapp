@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/providers/clients.dart';
+import 'package:provider/provider.dart';
 
 import 'screens/home.dart';
 import 'screens/login.dart';
@@ -12,17 +14,20 @@ void main() {
 
   //propriedade mais importante é o home
   runApp(
-    MaterialApp(
-      routes: {
-        '/': (context) => LoginScreen(),
-        '/home': (context) => HomeScreen(),
-        '/signup': (context) => SignUpScreen(),
-      },
+    ChangeNotifierProvider(
+      create: (ctx) => Clients(),
+      child: MaterialApp(
+        routes: {
+          '/': (context) => LoginScreen(),
+          '/home': (context) => HomeScreen(),
+          '/signup': (context) => SignUpScreen(),
+        },
 
-      debugShowCheckedModeBanner: false, //importante!
-      initialRoute: '/',
-      //home: LoginScreen(),
-      //Grandle
+        debugShowCheckedModeBanner: false, //importante!
+        initialRoute: '/',
+        //home: LoginScreen(),
+        //Grandle
+      ),
     ),
   );
 }

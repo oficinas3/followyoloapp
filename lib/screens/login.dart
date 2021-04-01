@@ -60,7 +60,16 @@ class LoginScreenState extends State<LoginScreen> {
                       validator: (String value) {
                         if (value.isEmpty) {
                           return "Please enter your email";
+                        } else {
+                          if (value == 'felipe@mememe.com') {
+                            return null;
+                          } else if (value == 'jose@test.com') {
+                            return null;
+                          } else {
+                            return 'Incorrect email';
+                          }
                         }
+
                         return null;
                       },
                     ),
@@ -97,9 +106,14 @@ class LoginScreenState extends State<LoginScreen> {
                     child: Text('Login'),
                     onPressed: () {
                       if (_formkey.currentState.validate()) {
+                        if (_email.text == 'felipe@mememe.com' ||
+                            _email.text == 'jose@test.com') {
+                          Navigator.of(context)
+                              .pushNamed('/home', arguments: _email.text);
+                        }
+
                         //Navigator.pushNamed(context, '/home');
-                        Navigator.of(context)
-                            .pushNamed('/home', arguments: _email.text);
+
                       }
                     },
                   ),

@@ -1,7 +1,10 @@
 //cadastro
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import './signupconfirmation.dart';
+import '../providers/clients.dart';
+import '../providers/client.dart';
 
 class SignUpScreen extends StatelessWidget {
   //Campos
@@ -26,6 +29,8 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final clientsData = Provider.of<Clients>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueGrey[900],
@@ -166,6 +171,11 @@ class SignUpScreen extends StatelessWidget {
                       //_trySubmit(userName.text, userCPF.text, userPassword.text);
                       //Navigator.pop(context);
                       if (_formkey.currentState.validate()) {
+                        clientsData.addClient(Client(
+                            id: 'c4',
+                            password: userPassword.text,
+                            email: userEmail.text,
+                            saldo: 34524.0));
                         //print('hello');
                         Navigator.of(context).push(
                           MaterialPageRoute(

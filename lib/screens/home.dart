@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:flutter_app/providers/clients.dart';
 
 String nomeCliente;
 String balanceCliente;
@@ -7,6 +10,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _login = ModalRoute.of(context).settings.arguments as String;
+
+    final _loadedLoginByProvider =
+        Provider.of<Clients>(context).findByEmail(_login);
+
     if (_login == 'felipe@mememe.com') {
       nomeCliente = 'Felipe';
       balanceCliente = 'U\$ 45,00';
@@ -33,6 +40,10 @@ class HomeScreen extends StatelessWidget {
             children: [
               Text("Hello, $nomeCliente", style: TextStyle(fontSize: 20)),
               customerListTile(nomeCliente),
+              Text('Provider data: ' +
+                  _loadedLoginByProvider.email +
+                  ' ' +
+                  _loadedLoginByProvider.id),
               ElevatedButton(
                 child: Text('Rent'),
                 onPressed: () {},
