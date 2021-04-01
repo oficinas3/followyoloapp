@@ -13,7 +13,11 @@ class LoginScreen extends StatefulWidget {
 
 class LoginScreenState extends State<LoginScreen> {
   //estado de que tipo?
+
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   bool stayLoggedIn = false;
+  var _email = TextEditingController();
+  var _password = TextEditingController();
 
   void isLoggedIn() {
     setState(() {
@@ -35,56 +39,77 @@ class LoginScreenState extends State<LoginScreen> {
       ),
       body: SingleChildScrollView(
         //ele torna a tela uma deslizavel, vertical eh o padrao
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/images/banner1.png',
-                  width: 300,
-                  height: 300,
-                ),
-                Card(
-                  child: TextField(
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(hintText: 'Email'),
+        child: Form(
+          key: _formkey,
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(25.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/banner1.png',
+                    width: 300,
+                    height: 300,
                   ),
-                ),
-                Card(
-                  child: TextField(
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(hintText: 'Password'),
-                    obscureText: true,
+                  Card(
+                    child: TextFormField(
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(hintText: 'Email'),
+                      controller: _email,
+                      validator: (String value) {
+                        if (value.isEmpty) {
+                          return "Please enter your email";
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Checkbox(
-                        value: stayLoggedIn,
-                        onChanged: (value) {
-                          setState(() {
-                            stayLoggedIn = !stayLoggedIn;
-                          });
-                        }),
-                    Text('Stay Logged In')
-                  ],
-                ),
-                ElevatedButton(
-                  child: Text('Login'),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/home');
-                  },
-                ),
-                TextButton(
+                  Card(
+                    child: TextFormField(
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(hintText: 'Password'),
+                      obscureText: true,
+                      controller: _password,
+                      validator: (String value) {
+                        if (value.isEmpty) {
+                          return "Please enter your password";
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Checkbox(
+                          value: stayLoggedIn,
+                          onChanged: (value) {
+                            setState(() {
+                              stayLoggedIn = !stayLoggedIn;
+                            });
+                          }),
+                      Text('Stay Logged In')
+                    ],
+                  ),
+                  ElevatedButton(
+                    child: Text('Login'),
                     onPressed: () {
-                      Navigator.pushNamed(context, '/signup');
+                      if (_formkey.currentState.validate()) {
+                        //Navigator.pushNamed(context, '/home');
+                        Navigator.of(context)
+                            .pushNamed('/home', arguments: _email.text);
+                      }
                     },
-                    child: Text('Create Account'))
-              ],
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/signup');
+                      },
+                      child: Text('Create Account'))
+                ],
+              ),
             ),
           ),
         ),
