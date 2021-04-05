@@ -1,5 +1,9 @@
 //porque eu usei um monte de widget do material design
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/clients.dart';
+import '../providers/client.dart';
 
 //ctrl + . : menu de refatoracao
 
@@ -27,6 +31,9 @@ class LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _clientsData = Provider.of<Clients>(context);
+    final clients = _clientsData.clients;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueGrey[900],
@@ -64,6 +71,8 @@ class LoginScreenState extends State<LoginScreen> {
                           if (value == 'felipe@mememe.com') {
                             return null;
                           } else if (value == 'jose@test.com') {
+                            return null;
+                          } else if (_clientsData.findByEmail(value) != null) {
                             return null;
                           } else {
                             return 'Incorrect email';
@@ -107,7 +116,8 @@ class LoginScreenState extends State<LoginScreen> {
                     onPressed: () {
                       if (_formkey.currentState.validate()) {
                         if (_email.text == 'felipe@mememe.com' ||
-                            _email.text == 'jose@test.com') {
+                            _email.text == 'jose@test.com' ||
+                            _clientsData.findByEmail(_email.text) != null) {
                           Navigator.of(context)
                               .pushNamed('/home', arguments: _email.text);
                         }

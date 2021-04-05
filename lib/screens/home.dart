@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import './qrcodereader_screen.dart';
 import 'package:flutter_app/providers/clients.dart';
 
 String nomeCliente;
@@ -21,6 +22,8 @@ class HomeScreen extends StatelessWidget {
       nomeCliente = "José";
       balanceCliente = 'U\$ 90,00';
     }
+
+    nomeCliente = _loadedLoginByProvider.nome;
 
     return Scaffold(
       appBar: AppBar(
@@ -46,7 +49,13 @@ class HomeScreen extends StatelessWidget {
                   _loadedLoginByProvider.id),
               ElevatedButton(
                 child: Text('Rent'),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => QRCodeReaderScreen(),
+                    ),
+                  );
+                },
               ),
               ElevatedButton(
                 child: Text('Call Admin'),

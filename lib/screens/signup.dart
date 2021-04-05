@@ -175,7 +175,8 @@ class SignUpScreen extends StatelessWidget {
                             id: 'c4',
                             password: userPassword.text,
                             email: userEmail.text,
-                            saldo: 34524.0));
+                            saldo: 34524.0,
+                            nome: userName.text));
                         //print('hello');
                         Navigator.of(context).push(
                           MaterialPageRoute(

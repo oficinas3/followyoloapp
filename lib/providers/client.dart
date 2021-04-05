@@ -5,6 +5,7 @@ class Client {
   final String email;
   final String password;
   final double saldo;
+  final String nome;
 
-  Client({this.email, this.password, this.id, this.saldo});
+  Client({this.email, this.nome, this.password, this.id, this.saldo});
 }
