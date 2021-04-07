@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class QRCodeReaderScreen extends StatefulWidget {
+  static const routeNate = '/qrcodereader';
+
   @override
   _QRCodeReaderScreenState createState() => _QRCodeReaderScreenState();
 }

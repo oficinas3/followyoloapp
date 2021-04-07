@@ -2,12 +2,32 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import './signupconfirmation.dart';
+import 'signupconfirmation.dart';
 import '../providers/clients.dart';
 import '../providers/client.dart';
 
-class SignUpScreen extends StatelessWidget {
-  //Campos
+import '../providers/auth.dart';
+import '../providers/user.dart';
+
+import '../models/http_exception.dart';
+
+class SignUpScreen extends StatefulWidget {
+  static const routeNate = '/signup';
+
+  @override
+  _SignUpScreenState createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  String _name, _email, _phone, _address, _cpf;
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  Map<String, String> _authData = {
+    'email': '',
+    'password': '',
+  };
+  var _isLoading = false;
+
   var userName = TextEditingController();
   var userEmail = TextEditingController();
   var userPhone = TextEditingController();
@@ -15,9 +35,6 @@ class SignUpScreen extends StatelessWidget {
   var userCPF = TextEditingController();
   var userPassword = TextEditingController();
   var userConfirmPassword = TextEditingController();
-
-  String _name, _email, _phone, _address, _cpf;
-  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
   _trySubmit(
     String nome,
@@ -27,24 +44,74 @@ class SignUpScreen extends StatelessWidget {
     print('nome: ${nome} cpf: ${cpf} password: ${password}');
   }
 
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('An Error Occourred!'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: Text('Okay'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _submit() async {
+    int statuscode;
+    if (!_formKey.currentState.validate()) {
+      // Invalid!
+      return;
+    }
+    _formKey.currentState.save();
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      // Sign user up
+      statuscode = await Provider.of<Auth>(context, listen: false).signup(
+        email: _authData['email'],
+        password: _authData['password'],
+        name: userName.text,
+      );
+    } catch (error) {
+      print(error);
+    }
+
+    if (statuscode == 200) {
+      setState(() {
+        _isLoading = false;
+      });
+      Navigator.of(context).pop();
+    } else if (statuscode == 400) {
+      _showErrorDialog('User not found!');
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final clientsData = Provider.of<Clients>(context);
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueGrey[900],
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          onPressed: () {},
-        ),
+        //leading: IconButton(
+        //  icon: Icon(Icons.menu),
+        //  onPressed: () {},
+        //),
         title: Text('Sign Up'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
         //ele torna a tela uma deslizavel, vertical eh o padrao
         child: Form(
-          key: _formkey,
+          key: _formKey,
           child: Center(
             child: Padding(
               padding: const EdgeInsets.all(25.0),
@@ -74,18 +141,19 @@ class SignUpScreen extends StatelessWidget {
                   ),
                   Card(
                     child: TextFormField(
-                        textAlign: TextAlign.center,
-                        decoration: InputDecoration(hintText: 'Email'),
-                        controller: userEmail,
-                        validator: (String value) {
-                          if (value.isEmpty) {
-                            return "Please enter your email";
-                          }
-                          return null;
-                        },
-                        onSaved: (String email) {
-                          _email = email;
-                        }),
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(hintText: 'Email'),
+                      controller: userEmail,
+                      validator: (String value) {
+                        if (value.isEmpty) {
+                          return "Please enter your email";
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _authData['email'] = value;
+                      },
+                    ),
                   ),
                   Card(
                     child: TextFormField(
@@ -133,7 +201,7 @@ class SignUpScreen extends StatelessWidget {
                         onSaved: (String address) {
                           _address = address;
                         }),
-                  ),
+                  ), //-MXcT8HKdTHW5jasM2cR
                   Card(
                     child: TextFormField(
                       textAlign: TextAlign.center,
@@ -145,6 +213,9 @@ class SignUpScreen extends StatelessWidget {
                           return "Please enter Password";
                         }
                         return null;
+                      },
+                      onSaved: (value) {
+                        _authData['password'] = value;
                       },
                     ),
                   ),
@@ -167,30 +238,7 @@ class SignUpScreen extends StatelessWidget {
                   ),
                   ElevatedButton(
                     child: Text('Confirmation'),
-                    onPressed: () {
-                      //_trySubmit(userName.text, userCPF.text, userPassword.text);
-                      //Navigator.pop(context);
-                      if (_formkey.currentState.validate()) {
-                        clientsData.addClient(Client(
-                            id: 'c4',
-                            password: userPassword.text,
-                            email: userEmail.text,
-                            saldo: 34524.0,
-                            nome: userName.text));
-                        //print('hello');
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => SignUpConfirmationScreen(
-                                userName.text,
-                                userEmail.text,
-                                userPhone.text,
-                                userAddress.text,
-                                userCPF.text,
-                                userPassword.text),
-                          ),
-                        );
-                      }
-                    },
+                    onPressed: _submit,
                   ),
                   TextButton(
                     onPressed: () {

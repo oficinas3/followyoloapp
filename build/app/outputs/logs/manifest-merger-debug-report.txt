@@ -5,6 +5,7 @@ INJECTED from /Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp
 INJECTED from /Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/android/app/src/main/AndroidManifest.xml:1:1-41:12
 INJECTED from /Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/android/app/src/main/AndroidManifest.xml:1:1-41:12
 MERGED from /Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/android/app/src/main/AndroidManifest.xml:1:1-41:12
+MERGED from [:shared_preferences] /Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/shared_preferences/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:flutter_barcode_scanner] /Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/flutter_barcode_scanner/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-21:12
 MERGED from [:flutter_plugin_android_lifecycle] /Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/flutter_plugin_android_lifecycle/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.material:material:1.0.0] /Users/felipe/.gradle/caches/transforms-2/files-2.1/50f23f4316049b4dbfe8a24fb2e3d1c5/material-1.0.0/AndroidManifest.xml:17:1-24:12
@@ -147,6 +148,8 @@ uses-sdk
 INJECTED from /Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/android/app/src/main/AndroidManifest.xml
 INJECTED from /Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/android/app/src/main/AndroidManifest.xml
+MERGED from [:shared_preferences] /Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/shared_preferences/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:shared_preferences] /Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/shared_preferences/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:flutter_barcode_scanner] /Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/flutter_barcode_scanner/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:flutter_barcode_scanner] /Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/flutter_barcode_scanner/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:flutter_plugin_android_lifecycle] /Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/flutter_plugin_android_lifecycle/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
