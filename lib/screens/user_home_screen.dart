@@ -3,7 +3,7 @@ import 'package:flutter_app/widgets/app_drawer.dart';
 import 'package:provider/provider.dart';
 
 import './qrcodereader_screen.dart';
-//import 'package:flutter_app/providers/clients.dart';
+import './credit_screen.dart';
 
 import '../providers/auth.dart';
 import '../providers/user.dart';
@@ -85,8 +85,14 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                       onPressed: () {},
                     ),
                     ElevatedButton(
-                      child: Text('Make Deposit'),
-                      onPressed: () {},
+                      child: Text('Put Credit'),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => CreditScreen(),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

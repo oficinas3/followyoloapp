@@ -122,11 +122,11 @@ class Auth with ChangeNotifier {
     return true;
   }
 
-  Future<int> signup(
-      {String email, String password, String name, double balance}) async {
+  Future<int> signup({String email, String password, String name}) async {
     var serverUrlEndPoint = 'https://followyolo.herokuapp.com/signup';
     var client = http.Client();
     int statusCode = 0;
+    double balance = 0.5;
 
     try {
       print('entrou no try do signup');
@@ -140,7 +140,7 @@ class Auth with ChangeNotifier {
               {
                 'email': email,
                 'password': password,
-                'balance': 320.5,
+                'balance': balance,
                 'nome': name
               },
             ),
@@ -151,18 +151,20 @@ class Auth with ChangeNotifier {
       print('status code $statusCode');
       if (statusCode == 200) {
         print('deu certo');
-        Map<String, dynamic> extractedData = jsonDecode(response.body);
-        print('nome' + extractedData['nome']);
+        //Map<String, dynamic> extractedData = jsonDecode(response.body);
+        //print('nome' + extractedData['nome']);
+        final extractedData = json.decode(response.body);
         _userEmail = email; //responseData['idToken'];
         _userName = name; //_userId = responseData['localId'];
+        _userBalance = balance;
         //final responseData = json.decode(response.body);
 
         notifyListeners();
         final prefs = await SharedPreferences.getInstance();
         final userData = json.encode(
           {
-            'userEmail': _token,
-            'userName': _userId,
+            'userEmail': email,
+            'userName': name,
           },
         );
         prefs.setString('userData', userData);
@@ -177,6 +179,7 @@ class Auth with ChangeNotifier {
   Future logout() async {
     _userName = null;
     _userEmail = null;
+    _userBalance = null;
 
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'signupconfirmation.dart';
+import 'trash/signupconfirmation.dart';
 import '../providers/clients.dart';
 import '../providers/client.dart';
 
@@ -79,6 +79,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         password: _authData['password'],
         name: userName.text,
       );
+      print('terminou o status code como $statuscode');
     } catch (error) {
       print(error);
     }
@@ -87,6 +88,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       setState(() {
         _isLoading = false;
       });
+      print('era pra dar pop');
       Navigator.of(context).pop();
     } else if (statuscode == 400) {
       _showErrorDialog('User not found!');
@@ -121,131 +123,154 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Image.asset(
                     'assets/images/banner1.png',
                     width: 300,
-                    height: 300,
+                    height: 200,
                   ),
                   Card(
-                    child: TextFormField(
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(hintText: 'Name'),
-                      controller: userName,
-                      validator: (String value) {
-                        if (value.isEmpty) {
-                          return "Please enter your name";
-                        }
-                        return null;
-                      },
-                      onSaved: (String name) {
-                        _name = name;
-                      },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                  ),
-                  Card(
-                    child: TextFormField(
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(hintText: 'Email'),
-                      controller: userEmail,
-                      validator: (String value) {
-                        if (value.isEmpty) {
-                          return "Please enter your email";
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                        _authData['email'] = value;
-                      },
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        children: [
+                          Card(
+                            child: TextFormField(
+                              textAlign: TextAlign.center,
+                              decoration: InputDecoration(hintText: 'Name'),
+                              controller: userName,
+                              validator: (String value) {
+                                if (value.isEmpty) {
+                                  return "Please enter your name";
+                                }
+                                return null;
+                              },
+                              onSaved: (String name) {
+                                _name = name;
+                              },
+                            ),
+                          ),
+                          Card(
+                            child: TextFormField(
+                              textAlign: TextAlign.center,
+                              decoration: InputDecoration(hintText: 'Email'),
+                              controller: userEmail,
+                              validator: (String value) {
+                                if (value.isEmpty) {
+                                  return "Please enter your email";
+                                }
+                                return null;
+                              },
+                              onSaved: (value) {
+                                _authData['email'] = value;
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Card(
+                            child: TextFormField(
+                                textAlign: TextAlign.center,
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(hintText: 'Phone'),
+                                controller: userPhone,
+                                validator: (String value) {
+                                  if (value.isEmpty) {
+                                    return "Please enter phone number";
+                                  }
+                                  return null;
+                                },
+                                onSaved: (String phone) {
+                                  _phone = phone;
+                                }),
+                          ),
+                          Card(
+                            child: TextFormField(
+                                textAlign: TextAlign.center,
+                                decoration: InputDecoration(hintText: 'CPF'),
+                                keyboardType: TextInputType.number,
+                                controller: userCPF,
+                                validator: (String value) {
+                                  if (value.isEmpty) {
+                                    return "Please enter CPF";
+                                  }
+                                  return null;
+                                },
+                                onSaved: (String cpf) {
+                                  _cpf = cpf;
+                                }),
+                          ),
+                          Card(
+                            child: TextFormField(
+                                textAlign: TextAlign.center,
+                                decoration:
+                                    InputDecoration(hintText: 'Address'),
+                                controller: userAddress,
+                                validator: (String value) {
+                                  if (value.isEmpty) {
+                                    return "Please enter address";
+                                  }
+                                  return null;
+                                },
+                                onSaved: (String address) {
+                                  _address = address;
+                                }),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Card(
+                            child: TextFormField(
+                              textAlign: TextAlign.center,
+                              decoration: InputDecoration(hintText: 'Password'),
+                              obscureText: true,
+                              controller: userPassword,
+                              validator: (String value) {
+                                if (value.isEmpty) {
+                                  return "Please enter Password";
+                                }
+                                return null;
+                              },
+                              onSaved: (value) {
+                                _authData['password'] = value;
+                              },
+                            ),
+                          ),
+                          Card(
+                            child: TextFormField(
+                              textAlign: TextAlign.center,
+                              decoration:
+                                  InputDecoration(hintText: 'Confirm Password'),
+                              obscureText: true,
+                              controller: userConfirmPassword,
+                              validator: (String value) {
+                                if (value.isEmpty) {
+                                  return "Please confirm your password";
+                                } else if (userPassword.text !=
+                                    userConfirmPassword.text) {
+                                  return "The password do not match!";
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          if (_isLoading)
+                            CircularProgressIndicator()
+                          else
+                            ElevatedButton(
+                              child: Text('Confirmation'),
+                              onPressed: _submit,
+                            ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text('Login'),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Card(
-                    child: TextFormField(
-                        textAlign: TextAlign.center,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(hintText: 'Phone'),
-                        controller: userPhone,
-                        validator: (String value) {
-                          if (value.isEmpty) {
-                            return "Please enter phone number";
-                          }
-                          return null;
-                        },
-                        onSaved: (String phone) {
-                          _phone = phone;
-                        }),
-                  ),
-                  Card(
-                    child: TextFormField(
-                        textAlign: TextAlign.center,
-                        decoration: InputDecoration(hintText: 'CPF'),
-                        keyboardType: TextInputType.number,
-                        controller: userCPF,
-                        validator: (String value) {
-                          if (value.isEmpty) {
-                            return "Please enter CPF";
-                          }
-                          return null;
-                        },
-                        onSaved: (String cpf) {
-                          _cpf = cpf;
-                        }),
-                  ),
-                  Card(
-                    child: TextFormField(
-                        textAlign: TextAlign.center,
-                        decoration: InputDecoration(hintText: 'Address'),
-                        controller: userAddress,
-                        validator: (String value) {
-                          if (value.isEmpty) {
-                            return "Please enter address";
-                          }
-                          return null;
-                        },
-                        onSaved: (String address) {
-                          _address = address;
-                        }),
-                  ), //-MXcT8HKdTHW5jasM2cR
-                  Card(
-                    child: TextFormField(
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(hintText: 'Password'),
-                      obscureText: true,
-                      controller: userPassword,
-                      validator: (String value) {
-                        if (value.isEmpty) {
-                          return "Please enter Password";
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                        _authData['password'] = value;
-                      },
-                    ),
-                  ),
-                  Card(
-                    child: TextFormField(
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(hintText: 'Confirm Password'),
-                      obscureText: true,
-                      controller: userConfirmPassword,
-                      validator: (String value) {
-                        if (value.isEmpty) {
-                          return "Please confirm your password";
-                        } else if (userPassword.text !=
-                            userConfirmPassword.text) {
-                          return "The password do not match!";
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  ElevatedButton(
-                    child: Text('Confirmation'),
-                    onPressed: _submit,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text('Login'),
-                  ),
+                  )
                 ],
               ),
             ),
