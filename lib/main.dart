@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/screens/qrcodereader_screen.dart';
 import 'package:provider/provider.dart';
 
-//import './screens/';
+//screens
 import './screens/user_home_screen.dart';
 import './screens/login_screen.dart';
 import './screens/signup_screen.dart';
 import './screens/splash_screen.dart';
 
-//import './providers/';
+//providers
 import './providers/auth.dart';
 import './providers/user.dart';
+import './providers/robots.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,11 +30,14 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<Auth, User>(
           create: (_) => User(),
           update: (ctx, auth, previousUser) {
-            previousUser.userName = auth.userName;
+            //previousUser.userName = auth.userName;
             previousUser.userEmail = auth.userEmail;
-
+            previousUser.userPassword = auth.userPassword;
             return previousUser;
           },
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => Robots(),
         ),
       ],
       child: Consumer<Auth>(

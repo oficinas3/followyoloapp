@@ -1,4 +1,4 @@
-#Thu Apr 08 14:01:59 BRT 2021
+#Mon Apr 12 14:39:28 BRT 2021
 base.0=/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

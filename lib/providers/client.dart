@@ -4,8 +4,15 @@ class Client {
   final String password;
   final double saldo;
   final String nome;
+  final String robotid;
 
-  Client({this.email, this.nome, this.password, this.id, this.saldo});
+  Client(
+      {this.email,
+      this.nome,
+      this.password,
+      this.id,
+      this.saldo,
+      this.robotid});
 }
 
 //test@test.com

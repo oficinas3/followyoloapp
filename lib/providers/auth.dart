@@ -49,6 +49,10 @@ class Auth with ChangeNotifier {
     return _userEmail;
   }
 
+  String get userPassword {
+    return _userPassword;
+  }
+
   String get userName {
     return _userName;
   }
@@ -89,12 +93,17 @@ class Auth with ChangeNotifier {
         _userName = extractedData['nome'];
         _userBalance = extractedData['balance'];
         notifyListeners();
+
         final prefs = await SharedPreferences.getInstance();
-        final userData = json.encode({
-          'userEmail': userEmail,
-          'userName': _userName,
-        });
-        prefs.setString('userData', userData);
+
+        if (!prefs.containsKey('userData')) {
+          final userData = json.encode({
+            'userEmail': userEmail,
+            'userName': _userName,
+            'userPassword': userPassword
+          });
+          prefs.setString('userData', userData);
+        }
       }
     } catch (error) {
       throw error;
@@ -102,6 +111,13 @@ class Auth with ChangeNotifier {
       client.close();
     }
     return statusCode;
+  }
+
+  void _savePreferences({String email, String name, String password}) async {
+    final prefs = await SharedPreferences.getInstance();
+    final userData = json
+        .encode({'userEmail': email, 'userName': name, 'password': password});
+    prefs.setString('userData', userData);
   }
 
   Future<bool> tryAutoLogin() async {
@@ -113,12 +129,11 @@ class Auth with ChangeNotifier {
         json.decode(prefs.getString('userData')) as Map<String, Object>;
 
     _userEmail = extractedUserData['userEmail'];
-    if (extractedUserData['userName'] == null) {
-      _userName = 'teste';
-    } else {
-      _userName = extractedUserData['userName'];
-    }
-    notifyListeners();
+    _userName = extractedUserData['userName'];
+    _userPassword = extractedUserData['userPassword'];
+    //faltou pegar os dados do servidor
+    login(_userEmail, _userPassword);
+    //notifyListeners();
     return true;
   }
 
@@ -160,11 +175,14 @@ class Auth with ChangeNotifier {
         //final responseData = json.decode(response.body);
 
         notifyListeners();
+
+        //tentando salvar no shared preferences
         final prefs = await SharedPreferences.getInstance();
         final userData = json.encode(
           {
             'userEmail': email,
             'userName': name,
+            'userPassword': password,
           },
         );
         prefs.setString('userData', userData);
@@ -187,3 +205,5 @@ class Auth with ChangeNotifier {
     prefs.clear(); //remove tudo
   }
 }
+
+int rentRobot(String qrcode) {}
