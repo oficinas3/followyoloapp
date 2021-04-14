@@ -15,7 +15,7 @@ import '../providers/user.dart';
 import '../widgets/app_drawer.dart';
 
 class UserHomeScreen extends StatefulWidget {
-  static const routeNate = '/client_home';
+  static const routeNate = '/user_home';
 
   @override
   _UserHomeScreenState createState() => _UserHomeScreenState();
@@ -143,46 +143,56 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text('Administrative tools',
-                        style: TextStyle(fontSize: 20)),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Card(
-                      child: Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    if (_loadedUser.isAdmin)
+                      Container(
+                        child: Column(
                           children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => ActiveUsersScreen(),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                'Active\nUsers',
-                                textAlign: TextAlign.center,
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text('Administrative tools',
+                                style: TextStyle(fontSize: 20)),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Card(
+                              child: Padding(
+                                padding: EdgeInsets.all(10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ActiveUsersScreen(),
+                                          ),
+                                        );
+                                      },
+                                      child: Text(
+                                        'Active\nUsers',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  RobotScreen(),
+                                            ),
+                                          );
+                                        },
+                                        child: Text('Robots')),
+                                  ],
+                                ),
                               ),
                             ),
-                            ElevatedButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => RobotScreen(),
-                                    ),
-                                  );
-                                },
-                                child: Text('Robots')),
                           ],
                         ),
                       ),
-                    ),
                   ],
                 ),
               ),

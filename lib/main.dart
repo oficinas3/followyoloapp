@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/screens/qrcodereader_screen.dart';
+import 'package:intl/intl.dart';
+
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 
 //screens
 import './screens/user_home_screen.dart';
 import './screens/login_screen.dart';
+import './screens/qrcodereader_screen.dart';
 import './screens/signup_screen.dart';
 import './screens/splash_screen.dart';
 
@@ -13,8 +16,35 @@ import './providers/auth.dart';
 import './providers/user.dart';
 import './providers/robots.dart';
 
+FlutterLocalNotificationsPlugin localNotifications;
 void main() {
+  WidgetsFlutterBinding
+      .ensureInitialized(); //precisa pra funcinar as notificacoes
+  var androidInitialize = new AndroidInitializationSettings('codex_logo');
+  var iOSInitialize = new IOSInitializationSettings();
+  var initializationSettings = new InitializationSettings(
+      android: androidInitialize, iOS: iOSInitialize);
+  localNotifications = new FlutterLocalNotificationsPlugin();
+  localNotifications.initialize(initializationSettings);
+
   runApp(MyApp());
+}
+
+Future showNofitication(String robotid) async {
+  var androidDetails = new AndroidNotificationDetails(
+      'channelId', 'Local Notification', 'teste teste teste',
+      importance: Importance.high);
+  var iosDetails = new IOSNotificationDetails();
+  var generalNotificationDetail =
+      new NotificationDetails(android: androidDetails, iOS: iosDetails);
+  await localNotifications.show(
+      0,
+      "Rent Started!",
+      "Robot: " +
+          robotid +
+          " at " +
+          DateFormat('kk:mm:ss (dd/MM/yyyy)').format(DateTime.now()),
+      generalNotificationDetail);
 }
 
 //dizendo que está  de acordo com o material design da google

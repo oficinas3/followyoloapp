@@ -20,6 +20,10 @@
         "source": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
     },
     {
+        "merged": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/res/merged/debug/drawable_codex_logo.png.flat",
+        "source": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/android/app/src/main/res/drawable/codex_logo.png"
+    },
+    {
         "merged": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/res/merged/debug/drawable_launch_background.xml.flat",
         "source": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/android/app/src/main/res/drawable/launch_background.xml"
     },

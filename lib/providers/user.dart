@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
@@ -11,6 +12,7 @@ class User with ChangeNotifier {
   String _userPassword;
   String _userName;
   double _userBalance;
+  int _isAdmin;
 
   final serverURL = 'https://followyolo.herokuapp.com/';
 
@@ -48,8 +50,14 @@ class User with ChangeNotifier {
         Map<String, dynamic> extractedData = jsonDecode(response.body);
 
         _userName = extractedData['nome'];
-        _userEmail = extractedData['email'];
-        _userBalance = extractedData['balance'];
+        //_userEmail = extractedData['email'];
+        _userBalance = checkDouble(extractedData['balance']);
+        //extractedData['balance'].toString(); //extractedData['balance'].toFloat();
+        if (extractedData['adm'] == null) {
+          _isAdmin = 0;
+        } else {
+          _isAdmin = extractedData['adm'];
+        }
         notifyListeners();
       }
     } catch (error) {
@@ -61,6 +69,20 @@ class User with ChangeNotifier {
   void logout() {
     _userEmail = null;
     _userPassword = null;
+    _isAdmin = null;
+    _userBalance = null;
+  }
+
+  static double checkDouble(dynamic value) {
+    if (value is String) {
+      return double.parse(value);
+    } else if (value is int) {
+      return value.toDouble();
+    } else if (value is double) {
+      return value;
+    } else {
+      return value.toDouble;
+    }
   }
 
   String get name {
@@ -69,6 +91,17 @@ class User with ChangeNotifier {
 
   double get balance {
     return this._userBalance;
+  }
+
+  String get userEmail {
+    return this._userEmail;
+  }
+
+  bool get isAdmin {
+    if (_isAdmin == 1) {
+      return true;
+    }
+    return false;
   }
 
   set userName(String value) {
@@ -84,24 +117,41 @@ class User with ChangeNotifier {
   }
 
   Future<int> addBalance(double addbalance) async {
-    final serverUrlEndPoint = serverURL + 'addbalance';
+    final serverUrlEndPoint = 'https://followyolo.herokuapp.com/addbalance';
     int statusCode = 0;
 
     try {
       final response = await http.post(
         serverUrlEndPoint,
+        headers: <String, String>{
+          "Content-Type": "application/json; charset=UTF-8"
+        },
         body: json.encode(
           {
             'email': _userEmail,
             'password': _userPassword,
-            'balance': addbalance
+            'balance': addbalance,
           },
         ),
       );
       statusCode = response.statusCode;
+
+      final extractedData = json.decode(response.body);
+      _userBalance = checkDouble(extractedData['newBalance']);
+
+      /* print('tentando adicionar $addbalance');
+      print(json.encode({
+        'email': _userEmail,
+        'password': _userPassword,
+        'balance': addbalance,
+      }));
+      print('status code do addbalance $statusCode');
+       */
     } catch (error) {
       throw error;
     }
+    notifyListeners();
+    return statusCode;
   }
 }
 

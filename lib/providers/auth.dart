@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -91,7 +92,7 @@ class Auth with ChangeNotifier {
 
         //_userEmail = extractedData['email'];
         _userName = extractedData['nome'];
-        _userBalance = extractedData['balance'];
+        //_userBalance = extractedData['balance'];
         notifyListeners();
 
         final prefs = await SharedPreferences.getInstance();
@@ -139,9 +140,9 @@ class Auth with ChangeNotifier {
 
   Future<int> signup({String email, String password, String name}) async {
     var serverUrlEndPoint = 'https://followyolo.herokuapp.com/signup';
-    var client = http.Client();
     int statusCode = 0;
-    double balance = 0.5;
+    //var client = http.Client();
+    //Float balance = 0.5;
 
     try {
       print('entrou no try do signup');
@@ -155,7 +156,7 @@ class Auth with ChangeNotifier {
               {
                 'email': email,
                 'password': password,
-                'balance': balance,
+                //'balance': balance,
                 'nome': name
               },
             ),
@@ -171,7 +172,8 @@ class Auth with ChangeNotifier {
         final extractedData = json.decode(response.body);
         _userEmail = email; //responseData['idToken'];
         _userName = name; //_userId = responseData['localId'];
-        _userBalance = balance;
+        _userPassword = password;
+        //_userBalance = balance;
         //final responseData = json.decode(response.body);
 
         notifyListeners();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app/screens/rent_screen.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class QRCodeReaderScreen extends StatefulWidget {
@@ -72,15 +73,27 @@ class _QRCodeReaderScreenState extends State<QRCodeReaderScreen> {
                 height: 50,
               ),
               Container(
-                width: double.infinity,
-                child: ElevatedButton(
-                  child: Text(_didScan ? 'Confirm' : 'Start QR Scan'),
-                  onPressed: () {
-                    scanQRCode();
-                    return;
-                  },
-                ),
-              ),
+                  width: double.infinity,
+                  child: qrCode != '-1' && qrCode != ''
+                      ? ElevatedButton(
+                          child: Text('Confirm'),
+                          onPressed: () {
+                            if (qrCode != '-1') {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => RentScreen(),
+                                ),
+                              );
+                            }
+                          },
+                        )
+                      : ElevatedButton(
+                          child: Text('Start QR Scan'),
+                          onPressed: () {
+                            scanQRCode();
+                            return;
+                          },
+                        )),
             ],
           ),
         ),
