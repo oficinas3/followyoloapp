@@ -114,6 +114,8 @@ class Auth with ChangeNotifier {
     return statusCode;
   }
 
+  Future<int> startRent(String qrcode) async {}
+
   void _savePreferences({String email, String name, String password}) async {
     final prefs = await SharedPreferences.getInstance();
     final userData = json

@@ -116,6 +116,67 @@ class User with ChangeNotifier {
     _userPassword = value;
   }
 
+  Future<int> startRent(String qrcode) async {
+    final endpoint = 'https://followyolo.herokuapp.com/startrent';
+    int statuscode = 0;
+    var messagebody = json.encode(
+      {
+        'email': _userEmail,
+        'password': _userPassword,
+        'qrcode': qrcode,
+      },
+    );
+
+    try {
+      final response = await http.post(
+        endpoint,
+        headers: <String, String>{
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        body: messagebody,
+      );
+      statuscode = response.statusCode;
+      print(messagebody);
+    } catch (error) {
+      throw error;
+    }
+
+    notifyListeners();
+    return statuscode;
+  }
+
+  Future<int> endRent(String qrcode, int rentMinutes) async {
+    final endpoint = 'https://followyolo.herokuapp.com/endRent';
+    int statuscode = 0;
+    var messagebody = json.encode({
+      'email': _userEmail,
+      'password': _userPassword,
+      'qrcode': qrcode,
+      'time': rentMinutes,
+    });
+
+    try {
+      final response = await http.post(
+        endpoint,
+        headers: <String, String>{
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        body: messagebody,
+      );
+      statuscode = response.statusCode;
+      print(messagebody);
+      final extractedData = json.decode(response.body);
+      _userBalance = checkDouble(extractedData['newBalance']);
+    } catch (error) {
+      throw error;
+    }
+
+    //"newBalance": 565.57
+
+    notifyListeners();
+    return statuscode;
+  }
+
   Future<int> addBalance(double addbalance) async {
     final serverUrlEndPoint = 'https://followyolo.herokuapp.com/addbalance';
     int statusCode = 0;
@@ -167,3 +228,10 @@ class User with ChangeNotifier {
 //2Iylidg39JbuvwyiTdClpj3RacO2
 //matheus@test.com
 //200
+//
+//
+//https://followyolo.herokuapp.com/robots
+//
+//
+//{"email":"felipe@teste.com","password":"1234","qrcode":"robo1"}
+//{"email":"felipe@teste.com","password":"1234","qrcode":"robo1", "time": 22}

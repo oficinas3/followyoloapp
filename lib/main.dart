@@ -14,6 +14,8 @@ import './screens/splash_screen.dart';
 //providers
 import './providers/auth.dart';
 import './providers/user.dart';
+import './providers/rent.dart';
+import './providers/rentrobot.dart';
 import './providers/robots.dart';
 
 FlutterLocalNotificationsPlugin localNotifications;
@@ -69,6 +71,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (ctx) => Robots(),
         ),
+        ChangeNotifierProvider(
+          create: (ctx) => RentedRobot(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => Rent(),
+        )
       ],
       child: Consumer<Auth>(
         builder: (ctx, auth, _) => MaterialApp(
