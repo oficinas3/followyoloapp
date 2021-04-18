@@ -123,6 +123,7 @@
 # End of content from /Volumes/Extra/Documents/flutter/packages/flutter_tools/gradle/flutter_proguard_rules.pro
 # The proguard configuration file for the following section is /Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/aapt_proguard_file/release/aapt_rules.txt
 -keep class androidx.core.app.CoreComponentFactory { <init>(); }
+-keep class com.NotificationsApp.Restore { <init>(); }
 -keep class com.amolg.flutterbarcodescanner.BarcodeCaptureActivity { <init>(); }
 -keep class com.apptreesoftware.barcodescan.BarcodeScannerActivity { <init>(); }
 -keep class com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver { <init>(); }

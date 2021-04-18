@@ -15,7 +15,7 @@ import './screens/splash_screen.dart';
 import './providers/auth.dart';
 import './providers/user.dart';
 import './providers/rent.dart';
-import './providers/rentrobot.dart';
+import 'screens/rentrobot.dart';
 import './providers/robots.dart';
 
 FlutterLocalNotificationsPlugin localNotifications;

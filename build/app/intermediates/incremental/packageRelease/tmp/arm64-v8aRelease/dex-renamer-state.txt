@@ -1,4 +1,4 @@
-#Thu Apr 15 20:19:32 BRT 2021
+#Thu Apr 15 21:46:19 BRT 2021
 base.0=/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

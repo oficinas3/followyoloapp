@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/providers/rentrobot.dart';
+import 'package:flutter_app/screens/rentrobot.dart';
 import 'package:provider/provider.dart';
 
 import '../main.dart';
