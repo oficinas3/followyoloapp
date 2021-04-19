@@ -7,7 +7,7 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import '../screens/rent_screen.dart';
 
 //providers
-import 'rentrobot.dart';
+import 'trash/rentrobot.dart';
 import '../providers/user.dart';
 
 class QRCodeReaderScreen extends StatefulWidget {

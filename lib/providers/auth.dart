@@ -63,23 +63,25 @@ class Auth with ChangeNotifier {
   }
 
   Future<int> login(String userEmail, String userPassword) async {
-    var serverUrlEndPoint = 'https://followyolo.herokuapp.com/login';
-    var client = http.Client();
     int statusCode = 0;
+    var endpoint = 'https://followyolo.herokuapp.com/login';
+    Map<String, String> header = {
+      "Content-Type": "application/json; charset=UTF-8"
+    };
+    var messagebody = json.encode(
+      {
+        'email': userEmail,
+        'password': userPassword,
+      },
+    );
+
     try {
       print('entrou no try do login');
       final response = await http
           .post(
-            serverUrlEndPoint,
-            headers: <String, String>{
-              "Content-Type": "application/json; charset=UTF-8",
-            },
-            body: json.encode(
-              {
-                'email': userEmail,
-                'password': userPassword,
-              },
-            ),
+            endpoint,
+            headers: header,
+            body: messagebody,
           )
           .timeout(Duration(seconds: 10));
 
@@ -87,12 +89,10 @@ class Auth with ChangeNotifier {
       print('status code $statusCode');
       if (statusCode == 200) {
         print('deu certo');
-        //final extractedData = json.decode(response.body);
-        Map<String, dynamic> extractedData = jsonDecode(response.body);
 
-        //_userEmail = extractedData['email'];
+        Map<String, dynamic> extractedData = jsonDecode(response.body);
         _userName = extractedData['nome'];
-        //_userBalance = extractedData['balance'];
+
         notifyListeners();
 
         final prefs = await SharedPreferences.getInstance();
@@ -109,12 +109,10 @@ class Auth with ChangeNotifier {
     } catch (error) {
       throw error;
     } finally {
-      client.close();
+      print('end');
     }
     return statusCode;
   }
-
-  Future<int> startRent(String qrcode) async {}
 
   void _savePreferences({String email, String name, String password}) async {
     final prefs = await SharedPreferences.getInstance();
@@ -136,33 +134,30 @@ class Auth with ChangeNotifier {
     _userPassword = extractedUserData['userPassword'];
     //faltou pegar os dados do servidor
     login(_userEmail, _userPassword);
-    //notifyListeners();
+
+    notifyListeners();
     return true;
   }
 
   Future<int> signup({String email, String password, String name}) async {
-    var serverUrlEndPoint = 'https://followyolo.herokuapp.com/signup';
+    var endpoint = 'https://followyolo.herokuapp.com/signup';
     int statusCode = 0;
-    //var client = http.Client();
-    //Float balance = 0.5;
+    Map<String, String> header = {
+      "Content-Type": "application/json; charset=UTF-8"
+    };
+    var messagebody = json.encode(
+      {
+        'email': email,
+        'password': password,
+        //'balance': balance,
+        'nome': name
+      },
+    );
 
     try {
       print('entrou no try do signup');
       final response = await http
-          .post(
-            serverUrlEndPoint,
-            headers: <String, String>{
-              "Content-Type": "application/json; charset=UTF-8"
-            },
-            body: json.encode(
-              {
-                'email': email,
-                'password': password,
-                //'balance': balance,
-                'nome': name
-              },
-            ),
-          )
+          .post(endpoint, headers: header, body: messagebody)
           .timeout(Duration(seconds: 10));
 
       statusCode = response.statusCode;
@@ -171,12 +166,13 @@ class Auth with ChangeNotifier {
         print('deu certo');
         //Map<String, dynamic> extractedData = jsonDecode(response.body);
         //print('nome' + extractedData['nome']);
-        final extractedData = json.decode(response.body);
-        _userEmail = email; //responseData['idToken'];
-        _userName = name; //_userId = responseData['localId'];
-        _userPassword = password;
         //_userBalance = balance;
         //final responseData = json.decode(response.body);
+
+        final extractedData = json.decode(response.body);
+        _userEmail = email;
+        _userName = name;
+        _userPassword = password;
 
         notifyListeners();
 

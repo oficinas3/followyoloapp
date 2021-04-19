@@ -13,9 +13,10 @@ import './screens/splash_screen.dart';
 
 //providers
 import './providers/auth.dart';
+import './providers/clients.dart';
 import './providers/user.dart';
 import './providers/rent.dart';
-import 'screens/rentrobot.dart';
+import 'screens/trash/rentrobot.dart';
 import './providers/robots.dart';
 
 FlutterLocalNotificationsPlugin localNotifications;
@@ -66,6 +67,15 @@ class MyApp extends StatelessWidget {
             previousUser.userEmail = auth.userEmail;
             previousUser.userPassword = auth.userPassword;
             return previousUser;
+          },
+        ),
+        ChangeNotifierProxyProvider<Auth, Clients>(
+          create: (_) => Clients(),
+          update: (ctx, auth, previousClients) {
+            //previousUser.userName = auth.userName;
+            previousClients.userEmail = auth.userEmail;
+            previousClients.userPassword = auth.userPassword;
+            return previousClients;
           },
         ),
         ChangeNotifierProvider(

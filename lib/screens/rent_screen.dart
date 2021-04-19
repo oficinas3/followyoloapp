@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/screens/rentrobot.dart';
+import 'package:flutter_app/screens/trash/rentrobot.dart';
 import 'package:provider/provider.dart';
 
 import '../main.dart';
@@ -35,6 +35,33 @@ class _RentScreenState extends State<RentScreen> {
     //_stopWatch.start();
 
     super.initState();
+  }
+
+  void _showForceCancelDialog() {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('Force quit'),
+        content: Text(
+            'Are you sure you want force quit the rent? You will need to contact the admin to end the rent'),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel')),
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+              //Navigator.of(context)
+            },
+            child: Text('Yes'),
+          ),
+        ],
+      ),
+    );
   }
 
   void _showConfirmDialog() {
@@ -105,8 +132,10 @@ class _RentScreenState extends State<RentScreen> {
           title: Text('Rent'),
           centerTitle: true,
           leading: IconButton(
-            icon: Icon(Icons.shopping_bag_outlined),
-            onPressed: () {},
+            icon: Icon(Icons.cancel_outlined),
+            onPressed: () {
+              _showForceCancelDialog();
+            },
           ),
         ),
         body: Center(

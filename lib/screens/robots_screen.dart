@@ -9,6 +9,11 @@ import '../widgets/robot_widget.dart';
 
 class RobotScreen extends StatelessWidget {
   static const routeName = '/robots';
+
+  Future<void> _refreshRobots(BuildContext context) async {
+    await Provider.of<Robots>(context, listen: false).fetchAndSetRobots();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +23,8 @@ class RobotScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: FutureBuilder(
-        future: Provider.of<Robots>(context, listen: false).fetchAndSetRobots(),
+        future: _refreshRobots(context),
+        //Provider.of<Robots>(context, listen: false).fetchAndSetRobots(),
         builder: (ctx, dataSnapshot) {
           if (dataSnapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -31,10 +37,13 @@ class RobotScreen extends StatelessWidget {
                 child: Text('An error occourred!'),
               );
             } else {
-              return Consumer<Robots>(
-                builder: (ctx, robotsData, child) => ListView.builder(
-                  itemCount: robotsData.robots.length,
-                  itemBuilder: (ctx, i) => RobotWidget(robotsData.robots[i]),
+              return RefreshIndicator(
+                onRefresh: () => _refreshRobots(context),
+                child: Consumer<Robots>(
+                  builder: (ctx, robotsData, child) => ListView.builder(
+                    itemCount: robotsData.robots.length,
+                    itemBuilder: (ctx, i) => RobotWidget(robotsData.robots[i]),
+                  ),
                 ),
               );
             }

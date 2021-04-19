@@ -25,22 +25,24 @@ class User with ChangeNotifier {
   }
 
   Future<int> userData() async {
-    var serverUrlEndPoint = 'https://followyolo.herokuapp.com/login';
+    var endpoint = 'https://followyolo.herokuapp.com/login';
     int statusCode = 0;
+    Map<String, String> header = {
+      "Content-Type": "application/json; charset=UTF-8"
+    };
+    var messagebody = json.encode(
+      {
+        'email': _userEmail,
+        'password': _userPassword,
+      },
+    );
 
     try {
       final response = await http
           .post(
-            serverUrlEndPoint,
-            headers: <String, String>{
-              "Content-Type": "application/json; charset=UTF-8",
-            },
-            body: json.encode(
-              {
-                'email': _userEmail,
-                'password': _userPassword,
-              },
-            ),
+            endpoint,
+            headers: header,
+            body: messagebody,
           )
           .timeout(Duration(seconds: 10));
 
@@ -50,9 +52,8 @@ class User with ChangeNotifier {
         Map<String, dynamic> extractedData = jsonDecode(response.body);
 
         _userName = extractedData['nome'];
-        //_userEmail = extractedData['email'];
         _userBalance = checkDouble(extractedData['balance']);
-        //extractedData['balance'].toString(); //extractedData['balance'].toFloat();
+
         if (extractedData['adm'] == null) {
           _isAdmin = 0;
         } else {
@@ -119,6 +120,9 @@ class User with ChangeNotifier {
   Future<int> startRent(String qrcode) async {
     final endpoint = 'https://followyolo.herokuapp.com/startrent';
     int statuscode = 0;
+    Map<String, String> header = {
+      "Content-Type": "application/json; charset=UTF-8"
+    };
     var messagebody = json.encode(
       {
         'email': _userEmail,
@@ -130,9 +134,7 @@ class User with ChangeNotifier {
     try {
       final response = await http.post(
         endpoint,
-        headers: <String, String>{
-          "Content-Type": "application/json; charset=UTF-8"
-        },
+        headers: header,
         body: messagebody,
       );
       statuscode = response.statusCode;
@@ -148,6 +150,9 @@ class User with ChangeNotifier {
   Future<int> endRent(String qrcode, int rentMinutes) async {
     final endpoint = 'https://followyolo.herokuapp.com/endRent';
     int statuscode = 0;
+    Map<String, String> header = {
+      "Content-Type": "application/json; charset=UTF-8"
+    };
     var messagebody = json.encode({
       'email': _userEmail,
       'password': _userPassword,
@@ -158,9 +163,7 @@ class User with ChangeNotifier {
     try {
       final response = await http.post(
         endpoint,
-        headers: <String, String>{
-          "Content-Type": "application/json; charset=UTF-8"
-        },
+        headers: header,
         body: messagebody,
       );
       statuscode = response.statusCode;
@@ -171,43 +174,32 @@ class User with ChangeNotifier {
       throw error;
     }
 
-    //"newBalance": 565.57
-
     notifyListeners();
     return statuscode;
   }
 
   Future<int> addBalance(double addbalance) async {
-    final serverUrlEndPoint = 'https://followyolo.herokuapp.com/addbalance';
     int statusCode = 0;
+    final endpoint = 'https://followyolo.herokuapp.com/addbalance';
+    Map<String, String> header = {
+      "Content-Type": "application/json; charset=UTF-8"
+    };
+    var messagebody = json.encode({
+      'email': _userEmail,
+      'password': _userPassword,
+      'balance': addbalance,
+    });
 
     try {
       final response = await http.post(
-        serverUrlEndPoint,
-        headers: <String, String>{
-          "Content-Type": "application/json; charset=UTF-8"
-        },
-        body: json.encode(
-          {
-            'email': _userEmail,
-            'password': _userPassword,
-            'balance': addbalance,
-          },
-        ),
+        endpoint,
+        headers: header,
+        body: messagebody,
       );
       statusCode = response.statusCode;
 
       final extractedData = json.decode(response.body);
       _userBalance = checkDouble(extractedData['newBalance']);
-
-      /* print('tentando adicionar $addbalance');
-      print(json.encode({
-        'email': _userEmail,
-        'password': _userPassword,
-        'balance': addbalance,
-      }));
-      print('status code do addbalance $statusCode');
-       */
     } catch (error) {
       throw error;
     }

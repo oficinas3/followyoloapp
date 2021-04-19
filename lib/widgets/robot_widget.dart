@@ -4,7 +4,6 @@ import '../providers/auth.dart';
 import '../providers/robots.dart';
 
 class RobotWidget extends StatefulWidget {
-  //final rbt.RobotItem robot;
   final Robot robot;
 
   RobotWidget(this.robot);
@@ -21,8 +20,15 @@ class _RobotWidgetState extends State<RobotWidget> {
       child: Column(
         children: [
           ListTile(
-            title: Text('robot_id: ${widget.robot.robotId}'),
-            subtitle: Text(widget.robot.state),
+            leading: CircleAvatar(
+              child: Icon(Icons.shopping_cart),
+              backgroundColor: Colors.blueGrey[300],
+              foregroundColor: Colors.white,
+            ),
+            isThreeLine: true,
+            title: Text(widget.robot.qrcode),
+            subtitle: Text(
+                'ID: ${widget.robot.robotId} \nStatus: ${widget.robot.state}'),
           ),
         ],
       ),
