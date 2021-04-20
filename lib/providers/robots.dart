@@ -1,24 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-
-class Robot {
-  String id;
-  int robotId;
-  int cnpj;
-  String state;
-  String qrcode;
-  String artag;
-
-  Robot(
-      {this.id, this.robotId, this.cnpj, this.state, this.qrcode, this.artag});
-}
+import './robot.dart';
 
 class Robots with ChangeNotifier {
   List<Robot> _robots = [];
 
-  String _userEmail;
-  String _userPassword;
+  //String _userEmail;
+  //String _userPassword;
 
   Robots();
 
@@ -41,7 +30,8 @@ class Robots with ChangeNotifier {
         'lengh: ${extractedData.length}');
 
     for (var i = 0; i < extractedData.length; i++) {
-      Robot robot = Robot(
+      var robot = Robot();
+      robot.initialize(
           id: extractedData[i]['_id'],
           robotId: extractedData[i]['robot_id'],
           cnpj: extractedData[i]['cnpj'],

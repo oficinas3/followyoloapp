@@ -26,8 +26,16 @@ class Auth with ChangeNotifier {
   String _userCPF;
   String _userAddress;
 
+  Map<String, String> header = {
+    "Content-Type": "application/json; charset=UTF-8"
+  };
+
   bool get isAuth {
-    return _userEmail != null;
+    if (_userEmail != null) {
+      print('is auth!');
+      return true;
+    }
+    return false;
   }
 
   String get token {
@@ -65,9 +73,6 @@ class Auth with ChangeNotifier {
   Future<int> login(String userEmail, String userPassword) async {
     int statusCode = 0;
     var endpoint = 'https://followyolo.herokuapp.com/login';
-    Map<String, String> header = {
-      "Content-Type": "application/json; charset=UTF-8"
-    };
     var messagebody = json.encode(
       {
         'email': userEmail,
@@ -77,13 +82,11 @@ class Auth with ChangeNotifier {
 
     try {
       print('entrou no try do login');
-      final response = await http
-          .post(
-            endpoint,
-            headers: header,
-            body: messagebody,
-          )
-          .timeout(Duration(seconds: 10));
+      final response = await http.post(
+        endpoint,
+        headers: header,
+        body: messagebody,
+      );
 
       statusCode = response.statusCode;
       print('status code $statusCode');
@@ -92,33 +95,28 @@ class Auth with ChangeNotifier {
 
         Map<String, dynamic> extractedData = jsonDecode(response.body);
         _userName = extractedData['nome'];
+        _userEmail = userEmail;
+        _userPassword = userPassword;
 
-        notifyListeners();
-
-        final prefs = await SharedPreferences.getInstance();
-
-        if (!prefs.containsKey('userData')) {
-          final userData = json.encode({
-            'userEmail': userEmail,
-            'userName': _userName,
-            'userPassword': userPassword
-          });
-          prefs.setString('userData', userData);
-        }
+        _savePreferences(email: userEmail, password: userPassword);
       }
     } catch (error) {
       throw error;
     } finally {
       print('end');
     }
+    notifyListeners();
     return statusCode;
   }
 
-  void _savePreferences({String email, String name, String password}) async {
+  void _savePreferences({String email, String password}) async {
     final prefs = await SharedPreferences.getInstance();
-    final userData = json
-        .encode({'userEmail': email, 'userName': name, 'password': password});
-    prefs.setString('userData', userData);
+    final userData =
+        json.encode({'userEmail': userEmail, 'userPassword': userPassword});
+
+    if (!prefs.containsKey('userData')) {
+      prefs.setString('userData', userData);
+    }
   }
 
   Future<bool> tryAutoLogin() async {
@@ -130,10 +128,10 @@ class Auth with ChangeNotifier {
         json.decode(prefs.getString('userData')) as Map<String, Object>;
 
     _userEmail = extractedUserData['userEmail'];
-    _userName = extractedUserData['userName'];
     _userPassword = extractedUserData['userPassword'];
     //faltou pegar os dados do servidor
-    login(_userEmail, _userPassword);
+
+    //login(email, password);
 
     notifyListeners();
     return true;
@@ -142,9 +140,6 @@ class Auth with ChangeNotifier {
   Future<int> signup({String email, String password, String name}) async {
     var endpoint = 'https://followyolo.herokuapp.com/signup';
     int statusCode = 0;
-    Map<String, String> header = {
-      "Content-Type": "application/json; charset=UTF-8"
-    };
     var messagebody = json.encode(
       {
         'email': email,
@@ -156,41 +151,25 @@ class Auth with ChangeNotifier {
 
     try {
       print('entrou no try do signup');
-      final response = await http
-          .post(endpoint, headers: header, body: messagebody)
-          .timeout(Duration(seconds: 10));
+      final response =
+          await http.post(endpoint, headers: header, body: messagebody);
 
       statusCode = response.statusCode;
       print('status code $statusCode');
       if (statusCode == 200) {
         print('deu certo');
-        //Map<String, dynamic> extractedData = jsonDecode(response.body);
-        //print('nome' + extractedData['nome']);
-        //_userBalance = balance;
-        //final responseData = json.decode(response.body);
 
-        final extractedData = json.decode(response.body);
         _userEmail = email;
         _userName = name;
         _userPassword = password;
 
-        notifyListeners();
-
-        //tentando salvar no shared preferences
-        final prefs = await SharedPreferences.getInstance();
-        final userData = json.encode(
-          {
-            'userEmail': email,
-            'userName': name,
-            'userPassword': password,
-          },
-        );
-        prefs.setString('userData', userData);
+        _savePreferences(email: _userEmail, password: _userPassword);
       }
     } catch (error) {
       throw error;
     }
 
+    notifyListeners();
     return statusCode;
   }
 
@@ -205,5 +184,3 @@ class Auth with ChangeNotifier {
     prefs.clear(); //remove tudo
   }
 }
-
-int rentRobot(String qrcode) {}

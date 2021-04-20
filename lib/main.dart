@@ -16,7 +16,7 @@ import './providers/auth.dart';
 import './providers/clients.dart';
 import './providers/user.dart';
 import './providers/rent.dart';
-import 'screens/trash/rentrobot.dart';
+import 'providers/robot.dart';
 import './providers/robots.dart';
 
 FlutterLocalNotificationsPlugin localNotifications;
@@ -82,7 +82,7 @@ class MyApp extends StatelessWidget {
           create: (ctx) => Robots(),
         ),
         ChangeNotifierProvider(
-          create: (ctx) => RentedRobot(),
+          create: (ctx) => Robot(),
         ),
         ChangeNotifierProvider(
           create: (ctx) => Rent(),

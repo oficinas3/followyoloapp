@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth.dart';
+import '../providers/robot.dart';
 import '../providers/robots.dart';
 
 class RobotWidget extends StatefulWidget {

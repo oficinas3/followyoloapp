@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/screens/trash/rentrobot.dart';
+
 import 'package:provider/provider.dart';
 
 import '../main.dart';
 
 import '../providers/rent.dart';
+import '../providers/robot.dart';
 import '../providers/user.dart';
 
 class RentScreen extends StatefulWidget {
@@ -16,6 +17,7 @@ class RentScreen extends StatefulWidget {
 }
 
 class _RentScreenState extends State<RentScreen> {
+  bool _isLost = false;
   //bool _isStart = true;
   //bool _firstTime = true;
   int i = 0;
@@ -23,6 +25,7 @@ class _RentScreenState extends State<RentScreen> {
   //final _stopWatch = new Stopwatch();
   //String _stopwatchText;
   Timer _timer;
+  Timer _getfromserver;
 
   @override
   void initState() {
@@ -30,6 +33,10 @@ class _RentScreenState extends State<RentScreen> {
     rentInfo.timer(0);
     _timer = new Timer.periodic(new Duration(seconds: 1), (timer) {
       rentInfo.updateRentTime();
+    });
+    _getfromserver = new Timer.periodic(new Duration(seconds: 5), (timer) {
+      print('second task');
+      //get isLost?
     });
     showNofitication('robot1');
     //_stopWatch.start();
@@ -52,6 +59,8 @@ class _RentScreenState extends State<RentScreen> {
               child: Text('Cancel')),
           TextButton(
             onPressed: () {
+              _getfromserver.cancel();
+              _timer.cancel();
               Navigator.of(ctx).pop();
               Navigator.of(context).pop();
               Navigator.of(context).pop();
@@ -92,22 +101,24 @@ class _RentScreenState extends State<RentScreen> {
   Future<void> _submit() async {
     int statuscode = 0;
     String errorMessage = '';
-    String qrcode = Provider.of<RentedRobot>(context, listen: false).qrcode;
+    int robotid = Provider.of<Robot>(context, listen: false).robotId;
+    //String qrcode = Provider.of<Robot>(context, listen: false).qrcode;
     int rentminutes = totalMinutes(
         Provider.of<Rent>(context, listen: false).getRentTimeSeconds());
     rentminutes++;
 
     try {
       statuscode = await Provider.of<User>(context, listen: false)
-          .endRent(qrcode, rentminutes);
+          .endRent(robotid, rentminutes);
     } catch (error) {
-      print(error);
       errorMessage = error;
+      print(errorMessage);
       throw error;
     }
 
     if (statuscode == 200) {
       _timer.cancel();
+      _getfromserver.cancel();
       Navigator.of(context).pop();
       Navigator.of(context).pop();
     }
@@ -116,10 +127,6 @@ class _RentScreenState extends State<RentScreen> {
   @override
   Widget build(BuildContext context) {
     print('build from scratch!');
-    //var rentInfo = Provider.of<Rent>(context);
-    /* setState(() {
-      _stopwatchText = formatTime(_stopWatch.elapsedMilliseconds);
-    }); */
 
     return WillPopScope(
       onWillPop: () async {
@@ -147,6 +154,8 @@ class _RentScreenState extends State<RentScreen> {
                   height: 20,
                 ),
                 Consumer<Rent>(builder: (context, data, child) {
+                  print(formatTime(data.getRentTimeSeconds()));
+
                   return Card(
                     child: Padding(
                       padding: EdgeInsets.all(20),
@@ -187,8 +196,7 @@ class _RentScreenState extends State<RentScreen> {
                           'Robot Id',
                           style: TextStyle(fontSize: 20),
                         ),
-                        Text(Provider.of<RentedRobot>(context, listen: false)
-                            .qrcode),
+                        Text(Provider.of<Robot>(context, listen: false).qrcode),
                       ]),
                     ),
                   ),

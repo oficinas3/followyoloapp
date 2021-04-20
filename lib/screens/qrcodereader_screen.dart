@@ -7,7 +7,7 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import '../screens/rent_screen.dart';
 
 //providers
-import 'trash/rentrobot.dart';
+import '../providers/robot.dart';
 import '../providers/user.dart';
 
 class QRCodeReaderScreen extends StatefulWidget {
@@ -23,10 +23,10 @@ class _QRCodeReaderScreenState extends State<QRCodeReaderScreen> {
   String errorMessage = '';
 
   Future<void> _submit(String qrcode) async {
-    int statuscode;
+    int robotid;
 
     try {
-      statuscode =
+      robotid =
           await Provider.of<User>(context, listen: false).startRent(qrcode);
     } catch (error) {
       print(error);
@@ -34,15 +34,16 @@ class _QRCodeReaderScreenState extends State<QRCodeReaderScreen> {
       throw error;
     }
 
-    if (statuscode == 200) {
-      Provider.of<RentedRobot>(context, listen: false).setQRCode(qrcode);
+    if (robotid < 400) {
+      Provider.of<Robot>(context, listen: false).setQRCode(qrcode);
+      Provider.of<Robot>(context, listen: false).robotId = robotid;
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => RentScreen(),
         ),
       );
-    } else if (statuscode == 400) {
-      _showErrorDialog(statuscode, errorMessage);
+    } else if (robotid == 400) {
+      _showErrorDialog(robotid, errorMessage);
     }
   }
 
@@ -130,12 +131,14 @@ class _QRCodeReaderScreenState extends State<QRCodeReaderScreen> {
                           height: 30,
                         ),
                         _didScan
-                            ? Text('$qrCode',
+                            ? Text(
+                                '$qrCode',
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.grey,
-                                ))
+                                ),
+                              )
                             : Image.asset(
                                 'assets/images/qrcodereader.png',
                                 width: 300,
@@ -165,14 +168,6 @@ class _QRCodeReaderScreenState extends State<QRCodeReaderScreen> {
                                   //manda form
                                   //popup
                                   //troca de tela
-                                  /* if (qrCode != '-1') {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => RentScreen(),
-                                      ),
-                                    );
-                                  } */
-                                  //_submit(qrCode);
                                   _confirmationDialog(qrCode);
                                 },
                               ),

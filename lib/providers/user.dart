@@ -15,6 +15,9 @@ class User with ChangeNotifier {
   int _isAdmin;
 
   final serverURL = 'https://followyolo.herokuapp.com/';
+  Map<String, String> header = {
+    "Content-Type": "application/json; charset=UTF-8"
+  };
 
   User();
 
@@ -27,9 +30,7 @@ class User with ChangeNotifier {
   Future<int> userData() async {
     var endpoint = 'https://followyolo.herokuapp.com/login';
     int statusCode = 0;
-    Map<String, String> header = {
-      "Content-Type": "application/json; charset=UTF-8"
-    };
+
     var messagebody = json.encode(
       {
         'email': _userEmail,
@@ -120,9 +121,8 @@ class User with ChangeNotifier {
   Future<int> startRent(String qrcode) async {
     final endpoint = 'https://followyolo.herokuapp.com/startrent';
     int statuscode = 0;
-    Map<String, String> header = {
-      "Content-Type": "application/json; charset=UTF-8"
-    };
+    int robotid = 0;
+
     var messagebody = json.encode(
       {
         'email': _userEmail,
@@ -137,26 +137,34 @@ class User with ChangeNotifier {
         headers: header,
         body: messagebody,
       );
-      statuscode = response.statusCode;
+      print('start rent message body');
       print(messagebody);
+      statuscode = response.statusCode;
+      if (statuscode == 200) {
+        print(response.body);
+        final extractedData = json.decode(response.body);
+        robotid = extractedData['robot_id'];
+      } else {
+        robotid = statuscode;
+      }
+
+      //robot_id
     } catch (error) {
       throw error;
     }
 
     notifyListeners();
-    return statuscode;
+    return robotid;
+    //return statuscode;
   }
 
-  Future<int> endRent(String qrcode, int rentMinutes) async {
+  Future<int> endRent(int robotid, int rentMinutes) async {
     final endpoint = 'https://followyolo.herokuapp.com/endRent';
     int statuscode = 0;
-    Map<String, String> header = {
-      "Content-Type": "application/json; charset=UTF-8"
-    };
     var messagebody = json.encode({
       'email': _userEmail,
       'password': _userPassword,
-      'qrcode': qrcode,
+      'robot_id': robotid,
       'time': rentMinutes,
     });
 
@@ -181,9 +189,7 @@ class User with ChangeNotifier {
   Future<int> addBalance(double addbalance) async {
     int statusCode = 0;
     final endpoint = 'https://followyolo.herokuapp.com/addbalance';
-    Map<String, String> header = {
-      "Content-Type": "application/json; charset=UTF-8"
-    };
+
     var messagebody = json.encode({
       'email': _userEmail,
       'password': _userPassword,

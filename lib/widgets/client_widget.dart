@@ -54,7 +54,7 @@ class _ClientWidgetState extends State<ClientWidget> {
       },
       onDismissed: (direction) async {
         int statuscode = await Provider.of<User>(context, listen: false)
-            .endRent('robo' + widget.client.robotId.toString(), 10);
+            .endRent(widget.client.robotId, 10);
       },
       child: Card(
         margin: EdgeInsets.all(10),
