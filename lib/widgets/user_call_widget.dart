@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../screens/user_calls_screen.dart';
+
 import '../providers/auth.dart';
 import '../providers/clients.dart';
 import '../providers/user.dart';
@@ -56,6 +59,8 @@ class _UserCallWidgetState extends State<UserCallWidget> {
       onDismissed: (direction) async {
         int statuscode = await Provider.of<User>(context, listen: false)
             .dismissUserCall(widget.usercall.id);
+        //Provider.of<UserCalls>(context, listen: false).fetchAndSetUserCalls();
+        refreshPage(context);
         print('status code do dismiss $statuscode');
       },
       child: Card(

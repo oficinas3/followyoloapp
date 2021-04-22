@@ -42,12 +42,14 @@ class _RentScreenState extends State<RentScreen> {
       robot.robotData().then((_) {
         if (robot.isLost()) {
           if (isLost == false) {
-            showNofitication('trocou');
+            //showNofitication('trocou');
+            robotLostNotification();
           }
         }
         isLost = robot.isLost();
       });
     });
+    //robotLostNotification();
     showNofitication('robot1');
     //_stopWatch.start();
 

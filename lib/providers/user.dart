@@ -239,14 +239,22 @@ class User with ChangeNotifier {
   Future<int> dismissUserCall(String idusercall) async {
     int statusCode = 0;
     final endpoint = 'https://followyolo.herokuapp.com/calladmin';
+    final url = Uri.parse(endpoint);
+    final request = http.Request("DELETE", url);
+    request.headers.addAll(header);
 
     var messagebody = json.encode({
-      'email': _userEmail,
-      'password': _userPassword,
-      'id': idusercall,
+      '_id': idusercall,
     });
 
-    try {} catch (error) {
+    request.body = messagebody;
+
+    try {
+      final response = await request.send();
+      statusCode = response.statusCode;
+      print('status code do delete: $statusCode');
+      //return response;
+    } catch (error) {
       print(error);
       throw error;
     }

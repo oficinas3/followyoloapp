@@ -7,12 +7,12 @@ import '../providers/usercalls.dart';
 //widgets
 import '../widgets/user_call_widget.dart';
 
+Future<void> refreshPage(BuildContext context) async {
+  await Provider.of<UserCalls>(context, listen: false).fetchAndSetUserCalls();
+}
+
 class UserCallsScreen extends StatelessWidget {
   static const routeName = '/usercalls';
-
-  Future<void> _refreshPage(BuildContext context) async {
-    await Provider.of<UserCalls>(context, listen: false).fetchAndSetUserCalls();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class UserCallsScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: FutureBuilder(
-        future: _refreshPage(context),
+        future: refreshPage(context),
         builder: (ctx, dataSnapshot) {
           if (dataSnapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -37,7 +37,7 @@ class UserCallsScreen extends StatelessWidget {
               );
             } else {
               return RefreshIndicator(
-                onRefresh: () => _refreshPage(context),
+                onRefresh: () => refreshPage(context),
                 child: Consumer<UserCalls>(
                   builder: (ctx, userCallsData, child) {
                     if (userCallsData.userCalls.length == 0) {

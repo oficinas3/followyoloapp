@@ -4668,9 +4668,9 @@ com.google.android.gms.internal.vision.zzea$zzj$zza:
     public final com.google.android.gms.internal.vision.zzea$zzj$zza zzk(long)
 androidx.customview.widget.ExploreByTouchHelper
 androidx.annotation.CheckResult
-io.flutter.embedding.engine.systemchannels.PlatformChannel:
-    private static final java.lang.String TAG
 io.flutter.embedding.engine.systemchannels.PlatformViewsChannel:
+    private static final java.lang.String TAG
+io.flutter.embedding.engine.systemchannels.PlatformChannel:
     private static final java.lang.String TAG
 kotlin.Suppress
 com.google.android.gms.common.server.response.zam

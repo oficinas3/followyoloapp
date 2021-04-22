@@ -49,6 +49,21 @@ Future newCallNotification() async {
       generalNotificationDetail);
 }
 
+Future robotLostNotification() async {
+  var androidDetails = new AndroidNotificationDetails(
+      'channelId', 'Local Notification', 'teste teste teste',
+      importance: Importance.high);
+  var iosDetails = new IOSNotificationDetails();
+  var generalNotificationDetail =
+      new NotificationDetails(android: androidDetails, iOS: iosDetails);
+  await localNotifications.show(
+      0,
+      "Robot!",
+      "Robot lost at" +
+          DateFormat('kk:mm:ss (dd/MM/yyyy)').format(DateTime.now()),
+      generalNotificationDetail);
+}
+
 Future showNofitication(String robotid) async {
   var androidDetails = new AndroidNotificationDetails(
       'channelId', 'Local Notification', 'teste teste teste',

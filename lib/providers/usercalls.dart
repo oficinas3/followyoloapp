@@ -31,12 +31,15 @@ class UserCalls with ChangeNotifier {
     final List<UserCall> loadedUserCalls = [];
     final extractedData =
         json.decode(response.body) as List<dynamic>; // as Map<String, dynamic>;
+
+    /*
     print(response.body);
-
-    print('usercall id: ' +
-        extractedData[1]['_id'] +
-        'lengh: ${extractedData.length}');
-
+     if (extractedData.length > 0) {
+      print('usercall id: ' +
+          extractedData[0]['_id'] +
+          'lengh: ${extractedData.length}');
+    }
+ */
     if (extractedData != null) {
       for (int i = 0; i < extractedData.length; i++) {
         UserCall userCallTemp = UserCall(
