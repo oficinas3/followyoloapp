@@ -39,13 +39,11 @@ class User with ChangeNotifier {
     );
 
     try {
-      final response = await http
-          .post(
-            endpoint,
-            headers: header,
-            body: messagebody,
-          )
-          .timeout(Duration(seconds: 10));
+      final response = await http.post(
+        endpoint,
+        headers: header,
+        body: messagebody,
+      );
 
       statusCode = response.statusCode;
       print('status code $statusCode');
@@ -210,6 +208,49 @@ class User with ChangeNotifier {
       throw error;
     }
     notifyListeners();
+    return statusCode;
+  }
+
+  Future<int> callAdmin(String value) async {
+    int statusCode = 0;
+    final endpoint = 'https://followyolo.herokuapp.com/calladmin';
+
+    var messagebody = json.encode({
+      'email': _userEmail,
+      'password': _userPassword,
+      'name': _userName,
+      'reason': value,
+    });
+
+    try {
+      final response = await http.post(
+        endpoint,
+        headers: header,
+        body: messagebody,
+      );
+      statusCode = response.statusCode;
+    } catch (error) {
+      throw error;
+    }
+
+    return statusCode;
+  }
+
+  Future<int> dismissUserCall(String idusercall) async {
+    int statusCode = 0;
+    final endpoint = 'https://followyolo.herokuapp.com/calladmin';
+
+    var messagebody = json.encode({
+      'email': _userEmail,
+      'password': _userPassword,
+      'id': idusercall,
+    });
+
+    try {} catch (error) {
+      print(error);
+      throw error;
+    }
+
     return statusCode;
   }
 }

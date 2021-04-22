@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/providers/user.dart';
 import 'package:provider/provider.dart';
+
+import '../providers/user.dart';
 
 class CreditScreen extends StatefulWidget {
   static const routeName = '/credit';
@@ -17,6 +18,7 @@ class _CreditScreenState extends State<CreditScreen> {
 
   Future<void> _submit() async {
     int statuscode;
+    String errormessage;
 
     if (!_formKey.currentState.validate()) {
       return;
@@ -33,21 +35,22 @@ class _CreditScreenState extends State<CreditScreen> {
           await Provider.of<User>(context, listen: false).addBalance(credit);
     } catch (error) {
       print(error);
+      errormessage = error;
       throw error;
     }
 
     if (statuscode == 200) {
       print('o deposito deu certo');
-      _showConfirmDialog();
       setState(() {
         _isLoading = false;
       });
+      _showConfirmDialog();
     } else {
       print('error');
-      _showErrorDialog();
       setState(() {
         _isLoading = false;
       });
+      _showErrorDialog(errormessage, statuscode);
     }
   }
 
@@ -70,17 +73,17 @@ class _CreditScreenState extends State<CreditScreen> {
     );
   }
 
-  void _showErrorDialog() {
+  void _showErrorDialog(String error, int statuscode) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text('An error Occourred!'),
-        content:
-            Text('It was not possible to put more credit, try again later'),
+        content: Text(
+            'It was not possible to put more credit, try again later, status code: $statuscode, error: ' +
+                error),
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.of(ctx).pop();
               Navigator.of(ctx).pop();
             },
             child: Text('Okay'),
@@ -113,15 +116,34 @@ class _CreditScreenState extends State<CreditScreen> {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: Padding(
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(20),
                     child: Column(
                       children: [
                         TextField(
                           keyboardType: TextInputType.number,
-                          decoration: InputDecoration(hintText: 'Card Number'),
+                          decoration: InputDecoration(
+                            hintText: 'Card Number',
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.blueGrey[200], width: 5.0)),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.blueGrey[100], width: 2.0)),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
                         ),
                         TextField(
-                          decoration: InputDecoration(hintText: 'Name'),
+                          decoration: InputDecoration(
+                            hintText: 'Name',
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.blueGrey[200], width: 5.0)),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.blueGrey[100], width: 2.0)),
+                          ),
                         )
                       ],
                     ),
@@ -133,13 +155,22 @@ class _CreditScreenState extends State<CreditScreen> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0)),
                       child: Padding(
-                        padding: EdgeInsets.all(10),
+                        padding: EdgeInsets.all(20),
                         child: Column(
                           children: [
                             TextFormField(
                               keyboardType: TextInputType.number,
-                              decoration:
-                                  InputDecoration(hintText: 'Input Credit'),
+                              decoration: InputDecoration(
+                                hintText: 'Input Credit',
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.blueGrey[200], width: 5.0),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.blueGrey[100], width: 2.0),
+                                ),
+                              ),
                               validator: (String value) {
                                 if (value.isEmpty) {
                                   return "Please put some number";
@@ -150,9 +181,16 @@ class _CreditScreenState extends State<CreditScreen> {
                                 credit = double.parse(value);
                               },
                             ),
+                            SizedBox(
+                              height: 20,
+                            ),
                             _isLoading
                                 ? CircularProgressIndicator()
                                 : ElevatedButton(
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                Colors.blueGrey[400])),
                                     onPressed: _submit,
                                     child: Text('Pay'),
                                   ),

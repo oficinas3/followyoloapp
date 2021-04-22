@@ -127,42 +127,68 @@ class LoginScreenState extends State<LoginScreen> {
                       padding: EdgeInsets.all(10),
                       child: Column(
                         children: [
-                          Card(
-                            child: TextFormField(
-                                textAlign: TextAlign.center,
-                                decoration: InputDecoration(hintText: 'Email'),
-                                controller: _email,
-                                validator: (String value) {
-                                  if (value.isEmpty || !value.contains('@')) {
-                                    return "Please enter your email";
-                                  }
-                                  return null;
-                                },
-                                onSaved: (value) {
-                                  _authData['email'] = value;
-                                }),
-                          ),
-                          Card(
-                            child: TextFormField(
+                          TextFormField(
                               textAlign: TextAlign.center,
-                              decoration: InputDecoration(hintText: 'Password'),
-                              obscureText: true,
-                              controller: _password,
+                              decoration: InputDecoration(
+                                hintText: 'Email',
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.blueGrey[200], width: 5.0),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.blueGrey[100], width: 2.0),
+                                ),
+                              ),
+                              controller: _email,
                               validator: (String value) {
-                                if (value.isEmpty) {
-                                  return "Please enter your password";
+                                if (value.isEmpty || !value.contains('@')) {
+                                  return "Please enter your email";
                                 }
                                 return null;
                               },
                               onSaved: (value) {
-                                _authData['password'] = value;
-                              },
+                                _authData['email'] = value;
+                              }),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          TextFormField(
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                              hintText: 'Password',
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.blueGrey[200], width: 5.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.blueGrey[100], width: 2.0),
+                              ),
                             ),
+                            obscureText: true,
+                            controller: _password,
+                            validator: (String value) {
+                              if (value.isEmpty) {
+                                return "Please enter your password";
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              _authData['password'] = value;
+                            },
+                          ),
+                          SizedBox(
+                            height: 20,
                           ),
                           if (_isLoading)
                             CircularProgressIndicator()
                           else
                             ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.blueGrey[400])),
                               child: Text('Login'),
                               onPressed: _submit,
                             ),

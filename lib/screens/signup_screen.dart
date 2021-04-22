@@ -258,6 +258,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             CircularProgressIndicator()
                           else
                             ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.blueGrey[400])),
                               child: Text('Confirmation'),
                               onPressed: _submit,
                             ),

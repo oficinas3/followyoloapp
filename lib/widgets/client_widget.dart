@@ -55,6 +55,7 @@ class _ClientWidgetState extends State<ClientWidget> {
       onDismissed: (direction) async {
         int statuscode = await Provider.of<User>(context, listen: false)
             .endRent(widget.client.robotId, 10);
+        print('status code do dismiss $statuscode');
       },
       child: Card(
         margin: EdgeInsets.all(10),

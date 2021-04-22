@@ -16,7 +16,7 @@ class Robots with ChangeNotifier {
   }
 
   Future<void> fetchAndSetRobots() async {
-    final endpoint = 'https://followyolo.herokuapp.com/robos';
+    final endpoint = 'https://followyolo.herokuapp.com/robots';
     final response = await http.get(endpoint);
     final List<Robot> loadedRobots = [];
     final extractedData =

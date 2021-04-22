@@ -10,7 +10,7 @@ class Robot with ChangeNotifier {
   String _id; //String _robotId;
   int _robotId;
   int _cnpj;
-  bool _isLost = false;
+  int _isLost;
 
   Robot();
   void initialize(
@@ -87,6 +87,25 @@ class Robot with ChangeNotifier {
   }
 
   //Robot({this.robotId, this.status});
+  Future<void> robotData() async {
+    final endpoint = 'https://followyolo.herokuapp.com/robot/$robotId';
+    final response = await http.get(endpoint);
+    final extractedData = json.decode(response.body);
+
+    _isLost = extractedData['islost'];
+    notifyListeners();
+  }
+
+  bool isLost() {
+    if (_isLost == 0) {
+      return false;
+    }
+    return true;
+  }
+
+  //'https://followyolo.herokuapp.com/robot/id/lost
+  //POST
+  //islost
 
   Future<void> getRobotStatus(String qrcode) async {
     final endpoint = '$server/robos/$qrcode';

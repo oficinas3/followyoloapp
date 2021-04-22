@@ -9,6 +9,8 @@ import '../providers/rent.dart';
 import '../providers/robot.dart';
 import '../providers/user.dart';
 
+import './call_admin_screen.dart';
+
 class RentScreen extends StatefulWidget {
   static const routeName = '/rent';
 
@@ -17,7 +19,8 @@ class RentScreen extends StatefulWidget {
 }
 
 class _RentScreenState extends State<RentScreen> {
-  bool _isLost = false;
+  bool isLost = false;
+
   //bool _isStart = true;
   //bool _firstTime = true;
   int i = 0;
@@ -30,13 +33,20 @@ class _RentScreenState extends State<RentScreen> {
   @override
   void initState() {
     var rentInfo = Provider.of<Rent>(context, listen: false);
+    var robot = Provider.of<Robot>(context, listen: false);
     rentInfo.timer(0);
     _timer = new Timer.periodic(new Duration(seconds: 1), (timer) {
       rentInfo.updateRentTime();
     });
     _getfromserver = new Timer.periodic(new Duration(seconds: 5), (timer) {
-      print('second task');
-      //get isLost?
+      robot.robotData().then((_) {
+        if (robot.isLost()) {
+          if (isLost == false) {
+            showNofitication('trocou');
+          }
+        }
+        isLost = robot.isLost();
+      });
     });
     showNofitication('robot1');
     //_stopWatch.start();
@@ -145,7 +155,7 @@ class _RentScreenState extends State<RentScreen> {
             },
           ),
         ),
-        body: Center(
+        body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
@@ -154,7 +164,7 @@ class _RentScreenState extends State<RentScreen> {
                   height: 20,
                 ),
                 Consumer<Rent>(builder: (context, data, child) {
-                  print(formatTime(data.getRentTimeSeconds()));
+                  //print(formatTime(data.getRentTimeSeconds()));
 
                   return Card(
                     child: Padding(
@@ -181,26 +191,71 @@ class _RentScreenState extends State<RentScreen> {
                 SizedBox(
                   height: 20,
                 ),
-                Card(
-                  child: Padding(
-                    padding: EdgeInsets.all(20),
-                    child: Container(
-                      width: double.infinity,
-                      child: Column(children: [
-                        Text(
-                          'Robot Status',
-                          style: TextStyle(fontSize: 20),
+                Consumer<Robot>(builder: (context, data, child) {
+                  return Container(
+                    child: Column(
+                      children: [
+                        Card(
+                          child: Padding(
+                            padding: EdgeInsets.all(20),
+                            child: Container(
+                              width: double.infinity,
+                              child: Column(children: [
+                                Text(
+                                  'Robot Status',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                Text(data.isLost() ? 'Lost' : 'Online'),
+                                Text(
+                                  'Robot Id',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                Text(data.qrcode),
+                              ]),
+                            ),
+                          ),
                         ),
-                        Text('Online'),
-                        Text(
-                          'Robot Id',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        Text(Provider.of<Robot>(context, listen: false).qrcode),
-                      ]),
+                        if (data.isLost())
+                          Card(
+                            child: Padding(
+                              padding: EdgeInsets.all(20),
+                              child: Container(
+                                width: double.infinity,
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      'Select a point to send the robot',
+                                      style: TextStyle(fontSize: 20),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    ElevatedButton(
+                                        style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all<
+                                                        Color>(
+                                                    Colors.blueGrey[400])),
+                                        onPressed: () {},
+                                        child: Text('Portaria')),
+                                    ElevatedButton(
+                                        style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all<
+                                                        Color>(
+                                                    Colors.blueGrey[400])),
+                                        onPressed: () {},
+                                        child: Text('Açogue'))
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
                     ),
-                  ),
-                ),
+                  );
+                }),
                 SizedBox(
                   height: 20,
                 ),
@@ -216,11 +271,26 @@ class _RentScreenState extends State<RentScreen> {
                         Container(
                           width: double.infinity,
                           child: ElevatedButton(
-                              onPressed: () {}, child: Text('Call Admin')),
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.blueGrey[400])),
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => CallAdminScreen(),
+                                  ),
+                                );
+                              },
+                              child: Text('Call Admin')),
                         ),
                         Container(
                           width: double.infinity,
                           child: ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.blueGrey[400])),
                               onPressed: () {
                                 _showConfirmDialog();
                                 //Navigator.of(context).pop();

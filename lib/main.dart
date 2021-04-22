@@ -15,8 +15,9 @@ import './screens/splash_screen.dart';
 import './providers/auth.dart';
 import './providers/clients.dart';
 import './providers/user.dart';
+import './providers/usercalls.dart';
 import './providers/rent.dart';
-import 'providers/robot.dart';
+import './providers/robot.dart';
 import './providers/robots.dart';
 
 FlutterLocalNotificationsPlugin localNotifications;
@@ -31,6 +32,21 @@ void main() {
   localNotifications.initialize(initializationSettings);
 
   runApp(MyApp());
+}
+
+Future newCallNotification() async {
+  var androidDetails = new AndroidNotificationDetails(
+      'channelId', 'Local Notification', 'teste teste teste',
+      importance: Importance.high);
+  var iosDetails = new IOSNotificationDetails();
+  var generalNotificationDetail =
+      new NotificationDetails(android: androidDetails, iOS: iosDetails);
+  await localNotifications.show(
+      0,
+      "New User Call!",
+      "New Calling at" +
+          DateFormat('kk:mm:ss (dd/MM/yyyy)').format(DateTime.now()),
+      generalNotificationDetail);
 }
 
 Future showNofitication(String robotid) async {
@@ -83,6 +99,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (ctx) => Robot(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => UserCalls(),
         ),
         ChangeNotifierProvider(
           create: (ctx) => Rent(),

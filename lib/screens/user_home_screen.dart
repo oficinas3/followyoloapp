@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
-
+import 'dart:async';
 import 'package:flutter_app/widgets/app_drawer.dart';
 import 'package:provider/provider.dart';
 
 //screens
+import '../main.dart';
 import './active_users_screen.dart';
 import './credit_screen.dart';
 import './qrcodereader_screen.dart';
 import './robots_screen.dart';
+import './call_admin_screen.dart';
+import './user_calls_screen.dart';
 
 import '../providers/auth.dart';
 import '../providers/user.dart';
+import '../providers/usercalls.dart';
 
 import '../widgets/app_drawer.dart';
 
@@ -24,8 +28,24 @@ class UserHomeScreen extends StatefulWidget {
 class _UserHomeScreenState extends State<UserHomeScreen> {
   var _isInit = true;
   var _isLoading = false;
+  bool isAdministrator = false;
+  Timer _timer;
+
+  @override
+  void dispose() {
+    if (isAdministrator) {
+      print('matou o timer');
+      _timer.cancel();
+    }
+
+    super.dispose();
+  }
 
   void didRunForTheFirstTime() {
+    User user = Provider.of<User>(context, listen: false);
+    UserCalls usercallsserver = Provider.of<UserCalls>(context, listen: false);
+    int usercalls = usercallsserver.size();
+
     if (_isInit) {
       setState(() {
         //aqui ele vai dizer se tá carregando ou nao
@@ -34,9 +54,19 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
 
       //final serverResponse = Provider.of<Auth>(context);
       //Provider.of<User>(context).fetchAndSetUser(name: serverResponse.userName,email: serverResponse.userEmail,balance: serverResponse.userBalance);
-      Provider.of<User>(context).userData().then((_) {
+      user.userData().then((_) {
         setState(() {
           _isLoading = false;
+          isAdministrator = user.isAdmin;
+          if (isAdministrator) {
+            _timer = new Timer.periodic(new Duration(seconds: 5), (timer) {
+              //print('teste admin funcionou');
+              if (usercalls != usercallsserver.size()) {
+                newCallNotification();
+              }
+              usercalls = usercallsserver.size();
+            });
+          }
         });
       });
     }
@@ -124,13 +154,21 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                       );
                                     },
                                   ),
+                                  //if (!_loadedUser.isAdmin)
                                   ElevatedButton(
                                     child: Text(
                                       'Call\nAdmin',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(color: Colors.white),
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              CallAdminScreen(),
+                                        ),
+                                      );
+                                    },
                                     style: ButtonStyle(
                                         backgroundColor:
                                             MaterialStateProperty.all<Color>(
@@ -163,6 +201,10 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     ElevatedButton(
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all<Color>(
+                                                  Colors.blueGrey[400])),
                                       onPressed: () {
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
@@ -177,6 +219,29 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                       ),
                                     ),
                                     ElevatedButton(
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all<Color>(
+                                                  Colors.blueGrey[400])),
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                UserCallsScreen(),
+                                          ),
+                                        );
+                                      },
+                                      child: Text(
+                                        'User\nCalls',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    ElevatedButton(
+                                        style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all<
+                                                        Color>(
+                                                    Colors.blueGrey[400])),
                                         onPressed: () {
                                           Navigator.of(context).push(
                                             MaterialPageRoute(

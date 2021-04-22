@@ -153,6 +153,10 @@ class _QRCodeReaderScreenState extends State<QRCodeReaderScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.blueGrey[400])),
                               child: Text(qrCode != ''
                                   ? 'Scan Again'
                                   : 'Start QR Scan'),
@@ -163,6 +167,10 @@ class _QRCodeReaderScreenState extends State<QRCodeReaderScreen> {
                             ),
                             if (qrCode != '-1' && qrCode != '')
                               ElevatedButton(
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Colors.blueGrey[400])),
                                 child: Text('Confirm'),
                                 onPressed: () {
                                   //manda form
