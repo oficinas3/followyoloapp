@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/providers/locations.dart';
 import 'package:intl/intl.dart';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -21,7 +22,7 @@ import './providers/robot.dart';
 import './providers/robots.dart';
 
 FlutterLocalNotificationsPlugin localNotifications;
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding
       .ensureInitialized(); //precisa pra funcinar as notificacoes
   var androidInitialize = new AndroidInitializationSettings('codex_logo');
@@ -29,7 +30,7 @@ void main() {
   var initializationSettings = new InitializationSettings(
       android: androidInitialize, iOS: iOSInitialize);
   localNotifications = new FlutterLocalNotificationsPlugin();
-  localNotifications.initialize(initializationSettings);
+  await localNotifications.initialize(initializationSettings);
 
   runApp(MyApp());
 }
@@ -47,6 +48,7 @@ Future newCallNotification() async {
       "New Calling at" +
           DateFormat('kk:mm:ss (dd/MM/yyyy)').format(DateTime.now()),
       generalNotificationDetail);
+  print('fim da funcao da notificacao');
 }
 
 Future robotLostNotification() async {
@@ -111,6 +113,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (ctx) => Robots(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => Locations(),
         ),
         ChangeNotifierProvider(
           create: (ctx) => Robot(),
