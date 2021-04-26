@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-w820dp-v13/values-w820dp-v13.xml",
+            "outputFile": "/Volumes/Extra/Felipe/Documentos/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-w820dp-v13/values-w820dp-v13.xml",
             "map": [
                 {
-                    "source": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/flutter_barcode_scanner/intermediates/packaged_res/debug/values-w820dp-v13/values-w820dp-v13.xml",
+                    "source": "/Volumes/Extra/Felipe/Documentos/developer/flutter/oficinas3/followyoloapp/build/flutter_barcode_scanner/intermediates/packaged_res/debug/values-w820dp-v13/values-w820dp-v13.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

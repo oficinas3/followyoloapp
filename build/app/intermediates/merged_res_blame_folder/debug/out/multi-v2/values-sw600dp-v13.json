@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-sw600dp-v13/values-sw600dp-v13.xml",
+            "outputFile": "/Volumes/Extra/Felipe/Documentos/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-sw600dp-v13/values-sw600dp-v13.xml",
             "map": [
                 {
                     "source": "/Users/felipe/.gradle/caches/transforms-2/files-2.1/50f23f4316049b4dbfe8a24fb2e3d1c5/material-1.0.0/res/values-sw600dp-v13/values-sw600dp-v13.xml",

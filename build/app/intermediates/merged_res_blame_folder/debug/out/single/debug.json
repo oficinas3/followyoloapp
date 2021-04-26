@@ -1,34 +1,38 @@
 [
     {
-        "merged": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher.png.flat",
-        "source": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/android/app/src/main/res/mipmap-hdpi/ic_launcher.png"
+        "merged": "/Volumes/Extra/Felipe/Documentos/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/res/merged/debug/drawable_launch_background.xml.flat",
+        "source": "/Volumes/Extra/Felipe/Documentos/developer/flutter/oficinas3/followyoloapp/android/app/src/main/res/drawable/launch_background.xml"
     },
     {
-        "merged": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher.png.flat",
-        "source": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
+        "merged": "/Volumes/Extra/Felipe/Documentos/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "/Volumes/Extra/Felipe/Documentos/developer/flutter/oficinas3/followyoloapp/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
     },
     {
-        "merged": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher.png.flat",
-        "source": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/android/app/src/main/res/mipmap-mdpi/ic_launcher.png"
+        "merged": "/Volumes/Extra/Felipe/Documentos/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "/Volumes/Extra/Felipe/Documentos/developer/flutter/oficinas3/followyoloapp/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
     },
     {
-        "merged": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/res/merged/debug/drawable-v21_launch_background.xml.flat",
-        "source": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/android/app/src/main/res/drawable-v21/launch_background.xml"
+        "merged": "/Volumes/Extra/Felipe/Documentos/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "/Volumes/Extra/Felipe/Documentos/developer/flutter/oficinas3/followyoloapp/android/app/src/main/res/mipmap-mdpi/ic_launcher.png"
     },
     {
-        "merged": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher.png.flat",
-        "source": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
+        "merged": "/Volumes/Extra/Felipe/Documentos/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/res/merged/debug/drawable_ic_launcher.png.flat",
+        "source": "/Volumes/Extra/Felipe/Documentos/developer/flutter/oficinas3/followyoloapp/android/app/src/main/res/drawable/ic_launcher.png"
     },
     {
-        "merged": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/res/merged/debug/drawable_codex_logo.png.flat",
-        "source": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/android/app/src/main/res/drawable/codex_logo.png"
+        "merged": "/Volumes/Extra/Felipe/Documentos/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "/Volumes/Extra/Felipe/Documentos/developer/flutter/oficinas3/followyoloapp/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
     },
     {
-        "merged": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/res/merged/debug/drawable_launch_background.xml.flat",
-        "source": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/android/app/src/main/res/drawable/launch_background.xml"
+        "merged": "/Volumes/Extra/Felipe/Documentos/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "/Volumes/Extra/Felipe/Documentos/developer/flutter/oficinas3/followyoloapp/android/app/src/main/res/mipmap-hdpi/ic_launcher.png"
     },
     {
-        "merged": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
+        "merged": "/Volumes/Extra/Felipe/Documentos/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/res/merged/debug/drawable_codex_logo.png.flat",
+        "source": "/Volumes/Extra/Felipe/Documentos/developer/flutter/oficinas3/followyoloapp/android/app/src/main/res/drawable/codex_logo.png"
+    },
+    {
+        "merged": "/Volumes/Extra/Felipe/Documentos/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/res/merged/debug/drawable-v21_launch_background.xml.flat",
+        "source": "/Volumes/Extra/Felipe/Documentos/developer/flutter/oficinas3/followyoloapp/android/app/src/main/res/drawable-v21/launch_background.xml"
     }
 ]

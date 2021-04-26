@@ -61,7 +61,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
           if (isAdministrator) {
             _timer = new Timer.periodic(new Duration(seconds: 5), (timer) {
               //print('teste admin funcionou');
-              if (usercalls != usercallsserver.size()) {
+              if (usercalls < usercallsserver.size()) {
                 newCallNotification();
               }
               usercalls = usercallsserver.size();

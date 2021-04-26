@@ -1,25 +1,8 @@
 {
     "logs": [
         {
-            "outputFile": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
+            "outputFile": "/Volumes/Extra/Felipe/Documentos/developer/flutter/oficinas3/followyoloapp/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
             "map": [
-                {
-                    "source": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/build/flutter_barcode_scanner/intermediates/packaged_res/debug/values/values.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,113,169,219,291,355,437,507,627,784,818,919,973,1043",
-                        "endColumns": "57,55,49,71,63,81,69,119,156,33,100,53,69,47",
-                        "endOffsets": "108,164,214,286,350,432,502,622,779,813,914,968,1038,1086"
-                    },
-                    "to": {
-                        "startLines": "219,220,485,486,487,488,489,514,516,517,523,524,527,528",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "14647,14705,31032,31082,31154,31218,31300,34492,34693,34850,35686,35787,35965,36035",
-                        "endColumns": "57,55,49,71,63,81,69,119,156,33,100,53,69,47",
-                        "endOffsets": "14700,14756,31077,31149,31213,31295,31365,34607,34845,34879,35782,35836,36030,36078"
-                    }
-                },
                 {
                     "source": "/Users/felipe/.gradle/caches/transforms-2/files-2.1/c55ef91c26d4308e6afaf93e553ef302/coordinatorlayout-1.0.0/res/values/values.xml",
                     "from": {
@@ -37,6 +20,25 @@
                         "endLines": "11,2914,3796,3885",
                         "endColumns": "60,12,24,24",
                         "endOffsets": "698,195057,244726,249937"
+                    }
+                },
+                {
+                    "source": "/Volumes/Extra/Felipe/Documentos/developer/flutter/oficinas3/followyoloapp/android/app/src/main/res/values/styles.xml",
+                    "from": {
+                        "startLines": "3,14",
+                        "startColumns": "4,4",
+                        "startOffsets": "173,816",
+                        "endLines": "7,16",
+                        "endColumns": "12,12",
+                        "endOffsets": "465,980"
+                    },
+                    "to": {
+                        "startLines": "1970,1975",
+                        "startColumns": "4,4",
+                        "startOffsets": "130194,130491",
+                        "endLines": "1974,1977",
+                        "endColumns": "12,12",
+                        "endOffsets": "130486,130655"
                     }
                 },
                 {
@@ -95,22 +97,20 @@
                     }
                 },
                 {
-                    "source": "/Volumes/Extra/Documents/developer/flutter/oficinas3/followyoloapp/android/app/src/main/res/values/styles.xml",
+                    "source": "/Volumes/Extra/Felipe/Documentos/developer/flutter/oficinas3/followyoloapp/build/flutter_barcode_scanner/intermediates/packaged_res/debug/values/values.xml",
                     "from": {
-                        "startLines": "3,14",
-                        "startColumns": "4,4",
-                        "startOffsets": "173,816",
-                        "endLines": "7,16",
-                        "endColumns": "12,12",
-                        "endOffsets": "465,980"
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,113,169,219,291,355,437,507,627,784,818,919,973,1043",
+                        "endColumns": "57,55,49,71,63,81,69,119,156,33,100,53,69,47",
+                        "endOffsets": "108,164,214,286,350,432,502,622,779,813,914,968,1038,1086"
                     },
                     "to": {
-                        "startLines": "1970,1975",
-                        "startColumns": "4,4",
-                        "startOffsets": "130194,130491",
-                        "endLines": "1974,1977",
-                        "endColumns": "12,12",
-                        "endOffsets": "130486,130655"
+                        "startLines": "219,220,485,486,487,488,489,514,516,517,523,524,527,528",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "14647,14705,31032,31082,31154,31218,31300,34492,34693,34850,35686,35787,35965,36035",
+                        "endColumns": "57,55,49,71,63,81,69,119,156,33,100,53,69,47",
+                        "endOffsets": "14700,14756,31077,31149,31213,31295,31365,34607,34845,34879,35782,35836,36030,36078"
                     }
                 },
                 {

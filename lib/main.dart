@@ -17,6 +17,7 @@ import './providers/auth.dart';
 import './providers/clients.dart';
 import './providers/user.dart';
 import './providers/usercalls.dart';
+import './providers/locations.dart';
 import './providers/rent.dart';
 import './providers/robot.dart';
 import './providers/robots.dart';
@@ -25,7 +26,7 @@ FlutterLocalNotificationsPlugin localNotifications;
 Future<void> main() async {
   WidgetsFlutterBinding
       .ensureInitialized(); //precisa pra funcinar as notificacoes
-  var androidInitialize = new AndroidInitializationSettings('codex_logo');
+  var androidInitialize = new AndroidInitializationSettings('ic_launcher');
   var iOSInitialize = new IOSInitializationSettings();
   var initializationSettings = new InitializationSettings(
       android: androidInitialize, iOS: iOSInitialize);
@@ -175,3 +176,5 @@ class MyApp extends StatelessWidget {
 //     ),
 //   );
 // }
+// 
+// https://github.com/abhishvek/flutter-local-notifications/blob/main/android/app/src/main/res/drawable/ic_launcher.png

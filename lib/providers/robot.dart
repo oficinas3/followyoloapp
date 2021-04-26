@@ -131,4 +131,12 @@ class Robot with ChangeNotifier {
     this._qrcode;
     notifyListeners();
   }
+
+  Future<int> goto(String location) async {
+    final endpoint = '';
+    int statuscode = 0;
+
+    print('goto temporario, location: ' + location);
+    return statuscode;
+  }
 }

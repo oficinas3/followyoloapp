@@ -1029,6 +1029,7 @@ drawable googleg_disabled_color_18
 drawable googleg_standard_color_18
 drawable ic_barcode_flash_off
 drawable ic_barcode_flash_on
+drawable ic_launcher
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/screens/locations_screen.dart';
 
 import 'package:provider/provider.dart';
 
@@ -233,22 +234,28 @@ class _RentScreenState extends State<RentScreen> {
                                     SizedBox(
                                       height: 20,
                                     ),
+                                    Text(
+                                      'Your robot is lost, do you want to send your robot to a location? \n To send, press the button bellow. You\'ll be redirected to a screen with the possible locations',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
                                     ElevatedButton(
                                         style: ButtonStyle(
                                             backgroundColor:
                                                 MaterialStateProperty.all<
                                                         Color>(
                                                     Colors.blueGrey[400])),
-                                        onPressed: () {},
-                                        child: Text('Portaria')),
-                                    ElevatedButton(
-                                        style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all<
-                                                        Color>(
-                                                    Colors.blueGrey[400])),
-                                        onPressed: () {},
-                                        child: Text('Açogue'))
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LocationsScreen(),
+                                            ),
+                                          );
+                                        },
+                                        child: Text('Select a location')),
                                   ],
                                 ),
                               ),
