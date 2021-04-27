@@ -35,6 +35,7 @@ class _QRCodeReaderScreenState extends State<QRCodeReaderScreen> {
     }
 
     if (robotid < 400) {
+      print('robot id: ' + robotid.toString());
       Provider.of<Robot>(context, listen: false).setQRCode(qrcode);
       Provider.of<Robot>(context, listen: false).robotId = robotid;
       Navigator.of(context).push(

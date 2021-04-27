@@ -35,6 +35,8 @@ class _RentScreenState extends State<RentScreen> {
   void initState() {
     var rentInfo = Provider.of<Rent>(context, listen: false);
     var robot = Provider.of<Robot>(context, listen: false);
+
+    print('robotid: ' + robot.id.toString());
     rentInfo.timer(0);
     _timer = new Timer.periodic(new Duration(seconds: 1), (timer) {
       rentInfo.updateRentTime();

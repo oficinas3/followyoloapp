@@ -115,28 +115,41 @@ class Robot with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<int> startRent(String qrcode) async {
-    final endpoint = 'https://followyolo.herokuapp.com/robos';
-    int statuscode = 0;
-    return statuscode;
-  }
-
-  Future<int> stopRent(String qrcode) async {
-    final endpoint = 'https://followyolo.herokuapp.com/robos';
-    int statuscode = 0;
-    return statuscode;
-  }
-
   void setRentedRobot(String qrcode) {
     this._qrcode;
     notifyListeners();
   }
 
   Future<int> goto(String location) async {
-    final endpoint = '';
     int statuscode = 0;
+    final endpoint = 'https://followyolo.herokuapp.com/robot/$robotId/goto';
+    var messagebody = json.encode(
+      {'point_name': location},
+    );
 
-    print('goto temporario, location: ' + location);
+    try {
+      print('endpoint: ' + endpoint);
+      print('mandando localizacao');
+      print(messagebody);
+      final response = await http.post(
+        endpoint,
+        headers: header,
+        body: messagebody,
+      );
+
+      print(response.body);
+      statuscode = response.statusCode;
+      print('status code $statuscode');
+      if (statuscode == 200) {
+        print('enviou o robo para o ponto ' + location + ' com sucesso!');
+      }
+    } catch (error) {
+      throw error;
+    } finally {
+      print('end');
+    }
+
+    //print('goto temporario, location: ' + location);
     return statuscode;
   }
 }
