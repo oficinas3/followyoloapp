@@ -29,6 +29,18 @@ class Locations with ChangeNotifier {
 
   Locations();
 
+  static double checkDouble(dynamic value) {
+    if (value is String) {
+      return double.parse(value);
+    } else if (value is int) {
+      return value.toDouble();
+    } else if (value is double) {
+      return value;
+    } else {
+      return value.toDouble;
+    }
+  }
+
   Future<void> fetchAndSetLocations() async {
     final endpoint = 'https://followyolo.herokuapp.com/market/points';
     final response = await http.get(endpoint);
@@ -41,8 +53,8 @@ class Locations with ChangeNotifier {
         Location tempLocation = Location(
             id: extractedData[i]['_i'],
             cnpj: extractedData[i]['market_cnpj'],
-            x: extractedData[i]['point_x'],
-            y: extractedData[i]['point_y'],
+            x: checkDouble(extractedData[i]['point_x']),
+            y: checkDouble(extractedData[i]['point_y']),
             name: extractedData[i]['point_name']);
         loadedLocations.add(tempLocation);
       }
