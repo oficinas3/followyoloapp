@@ -6,12 +6,15 @@ FollowYolo app, an app to rent the robots on the market to the FollowYolo projec
 1. Flutter SDK installed
 
 __Installation__
+
 Downlaod the Android 
 Android Studio
+
 https://developer.android.com/studio
 
 
 Flutter SDK Download 
+
 https://flutter.dev/docs/get-started/install
 
 __Installation Instructions for the Flutter SDK__
