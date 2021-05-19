@@ -26,19 +26,19 @@ https://flutter.dev/docs/get-started/install/linux
 
 
 # To Run:
-first
+First 
 ```
-git clone 
+git clone gitproject.git
 ```
 
 And then you can choose where it 
 
-# Android Studio 
+## Android Studio 
 Open the project on Android Studio and click on the Button 'Run'
 
 If you plug a Android Phone you can run the project on it or you can run on a Android Simulator 
 
-# Visual Studio Code
+## Visual Studio Code
 Open the folder on the VSCode and you can click on: 
 - Run > Run Without Debbuging 
 - Run > Start Debbuging
