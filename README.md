@@ -1,5 +1,5 @@
 # followyoloapp
-FollowYolo app 
+FollowYolo app, an app to rent the robots on the market to the FollowYolo project.
 
 ## Requiriments
 1. Android Studio 
@@ -31,7 +31,7 @@ First
 git clone gitproject.git
 ```
 
-And then you can choose where it 
+And then you can choose where you want to run it 
 
 ## Android Studio 
 Open the project on Android Studio and click on the Button 'Run'
